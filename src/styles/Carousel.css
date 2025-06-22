@@ -1,0 +1,64 @@
+.carousel-item{
+    height: 70vh;
+    
+  }
+  
+  .carousel-item img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(0.5);
+  }
+  
+  .carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: 7rem;
+    left: 15%;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    color:white;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .btn-carrusel{
+    font-weight: 600;
+  }
+  
+  .btn-carrusel:hover{
+    color: var(--bs-primario);
+  }
+
+  .logoRockVerde {
+  background-color: rgba(255, 255, 255, 0.726);
+  background-size: cover;
+  background-position: center;
+  width: 100px;
+}
+  
+  .carousel-dark .carousel-indicators .active {
+    opacity: 1;
+    background-color: var(--bs-primario);
+  }
+  
+  .carousel-indicators [data-bs-target]{
+    background-color: var(--bs-carousel-indicator-active-bg);
+  }
+
+  .divBlur {
+  backdrop-filter: blur(15px);
+  width: 85%;
+  border-radius: 25px;
+}
+
+@media screen and (min-width: 768px) {
+ .divBlur{
+  width: 65%;
+ } 
+  
+}
+
+.bottom-10{
+  bottom: 10%;
+}

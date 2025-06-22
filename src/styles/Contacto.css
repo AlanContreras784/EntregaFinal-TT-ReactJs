@@ -1,0 +1,14 @@
+
+.formulario{
+    max-width: 380px; 
+    margin: 0 auto;
+    div {
+        text-align: start;
+        margin-bottom: 10px;
+        input, textarea  {
+            width: 100%; 
+            padding: 8px;
+        }
+    }
+    
+}

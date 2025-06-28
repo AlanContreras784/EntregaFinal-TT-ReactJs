@@ -79,7 +79,7 @@ function Registrarse() {
                     <Form.Control value={country} type="text" onChange={(e) => setCountry(e.target.value)} />
                 </Form.Group>
                 <Button className='mb-3 me-4' variant="primary" type='submit'>Registrarse</Button>
-                <Link to={'/'}><Button className="mb-3" variant='outline-primary'>Login in</Button></Link>
+                <Link to={'/login'}><Button className="mb-3" variant='outline-primary'>Login in</Button></Link>
                 </Form>
                 </Card.Body>
             </Card>

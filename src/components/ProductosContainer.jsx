@@ -1,6 +1,5 @@
 import {useEffect, useState } from "react"
 import "../styles/Productos.css"
-import Card from "./CardProducto"
 import { useProductosContext } from "../contexts/ProductosContext";
 import CardProducto from "./CardProducto";
 

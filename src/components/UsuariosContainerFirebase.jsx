@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import "../styles/Productos.css"
-import { obtenerUsuarios } from "../Auth/firebase.js";
 import CardUsuario from "./CardUsuario.jsx";
+import { useUsuariosContext } from "../contexts/UsuarioContext.jsx";
 
 function UsuariosContainerFirebase({}){
     const [usuarios, setUsuarios] = useState([])
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
+    const {obtenerUsuariosFirebase} = useUsuariosContext();
 
     {useEffect(() => {
-        obtenerUsuarios()
+        obtenerUsuariosFirebase()
             .then((datos) => {
                 console.log(datos)
                 setUsuarios(datos)
@@ -28,7 +29,9 @@ function UsuariosContainerFirebase({}){
         return <p>{error}</p>;
     }else{
         return(
-            <div  className="productos-conteiner">
+            <div  className="productos-conteiner  py-4 g-0">
+                <h1 className="w-100">USUARIOS Y/O CLIENTES</h1>
+                
                 {usuarios.map((usuario) => (
                     <CardUsuario
                         key={usuario.id}

@@ -17,6 +17,7 @@ import FormularioEdicion from './components/FormularioEdicion';
 import { useAuthContext } from './contexts/AuthContext';
 import UsuariosContainerFirebase from './components/UsuariosContainerFirebase';
 import UsuarioDetalleFirebase from './components/UsuarioDetalleFirebase';
+import FormularioEdicionUsuario from './components/FormularioEdicionUsuario';
 
 
 function App() {
@@ -34,20 +35,19 @@ function App() {
         <Router>
           <Header/>
           <Routes>
-            
-            <Route path="/pre-entrega-react-js/" element={<Home/>} />
             <Route path="/" element={<Home/>} />
-            <Route path="/login" element={<Login/>}/>
-            <Route path='/registrarse' element={<Registrarse/>}/>
             <Route path="/about" element={<About/>}/>
             <Route path="/contacto" element={<FormularioConSweetAlert/>}/>
-            <Route path="/productos" element={<ProductosContainer/>} />
             <Route path="/carrito" element={<Carrito/> }/>
+            <Route path="/productos" element={<ProductosContainer/>} />
             <Route path="/productos/:id" element={<ProductoDetalle/>} />
-            <Route path="/admin/containerUsuarios" element={<UsuariosContainerFirebase/>}/>
-            <Route path="/admin/usuarios/:id" element={<UsuarioDetalleFirebase/>}/>
             <Route path="/admin/agregarProductos" element={<FormularioProducto/>}/>
             <Route path='/admin/editarProducto/:id' element={<FormularioEdicion/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path='/registrarse' element={<Registrarse/>}/>
+            <Route path="/admin/usuarios" element={<UsuariosContainerFirebase/>}/>
+            <Route path="/admin/usuarios/:id" element={<UsuarioDetalleFirebase/>}/>
+            <Route path='/admin/editarUsuario/:id' element={<FormularioEdicionUsuario/>}/>
           </Routes>
           <Footer/>
         </Router>

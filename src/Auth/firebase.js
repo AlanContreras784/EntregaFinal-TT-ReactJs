@@ -22,6 +22,15 @@ const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 const auth = getAuth();
 
+
+//////////////////////////////////////////////////////////////////////
+///////////////// AUTENTICACIÓN DE USUARIOS FIREBASE//////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+//const provider = new GoogleAuthProvider();
+//const auth = getAuth();
+
+
 export function crearUsuario(email, password){
     return(
         new Promise((res,rej)=>{
@@ -72,13 +81,6 @@ export function loginEmailPass(email, password){
 }
 
 
-//////////////////////////////////////////////////////////////////////
-///////////////// AUTENTICACIÓN DE USUARIOS FIREBASE//////////////////////////
-//////////////////////////////////////////////////////////////////////
-
-//const provider = new GoogleAuthProvider();
-//const auth = getAuth();
-
 auth.useDeviceLanguage()
 export function logearG(){
     signInWithPopup(auth, provider)
@@ -103,32 +105,11 @@ export function logearG(){
         // ...
     });
 }
-
-// export function loginEmailPass(email, password){
-//     return(
-//         new Promise((res, rej) => {
-//             signInWithEmailAndPassword(auth, email, password)
-//             .then((userCredential) => {
-//                 // Signed in 
-//                 console.log("Credenciales", userCredential)
-//                 const user = userCredential.user;
-//                 console.log(user)
-//                 res(user)
-//             })
-//             .catch((error) => {
-//                 console.log(error.code)
-//                 const errorCode = error.code;
-//                 const errorMessage = error.message;
-//                 rej(error)
-//             });
-//         })
-//     )
-// }
-/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 ///////////////////// BASE DE DATOS FIRESTORE  //////// ////////
 ////////////////////////////////////////////////////////////////
 
-import { addDoc, collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc } from "firebase/firestore";
 
 const db = getFirestore(app);
 
@@ -194,7 +175,7 @@ export function obtenerUsuarioEnFirebase(id) {
                         console.log("Document data:", docSnap.data());
                         const data = docSnap.data();
                         const usuario = {
-                            id: doc.id,
+                            id: docSnap.id,
                             name: data.name,
                             imagen: data.imagen,
                             age: data.age,
@@ -215,6 +196,47 @@ export function obtenerUsuarioEnFirebase(id) {
         })
     )
 }
+
+export function editarUsuario(usuario){
+    return(
+        new Promise(async (res, rej) => {
+            try{
+                if (!usuario || typeof usuario.id !== "string" || usuario.id.trim() === "") {
+                    throw new Error("El ID del usuario es inválido o no está definido");
+                }
+                await setDoc(doc(db, "usuarios", usuario.id), {
+                    id:usuario.id,
+                    name: usuario.name,
+                    imagen: usuario.imagen,
+                    age: usuario.age,
+                    email: usuario.email,
+                    country: usuario.country
+                })
+                console.log("Document written ");
+                res()
+            }catch (e){
+                console.error("Error adding document: ", e);
+                rej(e)
+            }
+        })
+    )
+}
+
+export function eliminarUsuario(id){
+    return(
+        new Promise(async(res, rej) => {
+            try{
+                await deleteDoc(doc(db, "usuarios", id))
+                res()
+            }catch (e){
+                console.error("Error adding document: ", e);
+                rej(e)
+            }
+
+        })
+    )
+}
+
 
 /*crearProducto("test", "url", 23, "klasjdklsajdsaldkklasdljka").then(() => {
     console.log("si")

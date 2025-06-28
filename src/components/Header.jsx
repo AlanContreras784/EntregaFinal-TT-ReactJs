@@ -1,15 +1,18 @@
 import Logo from "../assets/img/Logo Cero Huella Horiz.png"
 import "../styles/Header.css"
 import {Container, Navbar, Nav, Badge, NavDropdown, Offcanvas, Form, Button, InputGroup} from 'react-bootstrap';
-import { Link, useNavigate} from "react-router-dom";
-import { useContext, useState } from 'react';
+import { Link, useNavigate, useParams} from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
 import { CarritoContext } from '../contexts/CarritoContext';
 import { useAuthContext } from "../contexts/AuthContext";
+import { useUsuariosContext } from "../contexts/UsuarioContext";
 
 function Header() {
     const {user, admin, logout}= useAuthContext();
     const {productosCarrito} = useContext(CarritoContext);
     const navigate= useNavigate();
+    
+    
     
 
     function obtenerUsername(token){
@@ -49,7 +52,7 @@ function Header() {
                             <Nav.Link href="#" as={Link} to={'/productos'} className='nav-link'>Productos</Nav.Link>
                             <Nav.Link href="#" as={Link} to={'/contacto'} className='nav-link'>Contacto</Nav.Link>
                             <Nav.Link href="#" as={Link} to={'/about'} className='nav-link me-auto'>Nosotros</Nav.Link>
-                            {admin ? <Nav.Link href="#" as={Link} to={'/admin/containerUsuarios'} className='nav-link'>Usuarios</Nav.Link> : <></> } 
+                            {admin ? <Nav.Link href="#" as={Link} to={'/admin/usuarios'} className='nav-link'>Usuarios</Nav.Link> : <></> } 
                             {/* <NavDropdown
                                 title="Dropdown"
                                 id={`offcanvasNavbarDropdown-expand-lg`}
@@ -78,7 +81,7 @@ function Header() {
                                 </Button>
                             </InputGroup>
                             <Nav.Link href="#" as={Link} to={'/carrito'} className='mx-2 mt-2 nav-link position-relative'><i className= " fa-solid fa-cart-shopping fa-lg"><Badge pill bg="danger"  className="position-absolute  me-5 translate-middle badge-small">{productosCarrito.length>0 ? productosCarrito.length : ""}</Badge></i></Nav.Link>
-                            <Nav.Link href="#" as={Link} to={'/login'} className='mx-o nav-link'><Button size="sm" variant="outline-light" className="border-0 " onClick={ !user ? handleNavigateLogin : handleLogout}>{ !user ? <i className="fa-solid fa-user fa-xl" style={{color:"#ffffff"}}></i> : <span size="sm" variant="outline-light" className="border-boton px-1"> {'User: '+ obtenerUsername(user)}</span>}</Button></Nav.Link>
+                            <Nav.Link href="#" as={Link} to={'/login'} className='mx-o nav-link'><Button size="sm" variant="outline-light" className="border-0 " onClick={ !user ? handleNavigateLogin : handleLogout}>{ !user ? <i className="fa-solid fa-user fa-xl" style={{color:"#ffffff"}}></i> : <span size="sm" variant="outline-light" className="border-boton p-1"><i className="fa-solid fa-user" style={{color:"#ffffff"}}></i> : {obtenerUsername(user)}</span>}</Button></Nav.Link>
                             {/*<i className="fa-solid fa-user" style={{color:"#ffffff"}}></i>*/}
                             </Nav>
                         </Offcanvas.Body>

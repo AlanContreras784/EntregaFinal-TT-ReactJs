@@ -8,7 +8,7 @@ function CardUsuario({usuario}){
     return(
         <Card className="producto-card rounded-4 " key={usuario.id}>
             <Card.Body className="p-0 ">
-                <img className="producto-image mb-2 rounded-top-4" src={usuario.imagen}></img>
+                <img className="producto-image mb-2 rounded-top-4 card-img-top " src={usuario.imagen}></img>
                 <Card.Title><h5>{usuario.name}</h5></Card.Title>
                 <Card.Subtitle><p>{usuario.email} </p></Card.Subtitle>
                 <Link to={"/admin/usuarios/"+ usuario.id}><Button variant="outline-success">Ver Detalles del Usuario</Button></Link>

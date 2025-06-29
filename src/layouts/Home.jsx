@@ -5,8 +5,14 @@ function Home() {
 
     return(
         <div>
-            <CarouselInicio/>
+            <section>
+                <CarouselInicio/>
+            </section>
+            <section>
+
+            </section>
         </div>
+        
     )
 }
 

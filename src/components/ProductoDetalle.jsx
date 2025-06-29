@@ -72,7 +72,7 @@ function ProductoDetalle({}) {
       <div className="detalle-info">
         <h1 className="fs-2 ">{productoSeleccionado.name}</h1>
         <p>{productoSeleccionado.description}</p>
-        <h6>{productoSeleccionado.price} $</h6>
+        <h6>$ {productoSeleccionado.price} </h6>
         {admin?
           <div className="d-flex  flex-column ">
             <Link to={"/admin/editarProducto/" + id}><Button className="mx-auto mb-2 " variant="outline-warning">Editar Producto</Button></Link>

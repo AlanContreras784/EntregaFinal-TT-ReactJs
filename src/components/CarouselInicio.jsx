@@ -13,10 +13,6 @@ function CarouselInicio() {
       <Carousel.Item>
         <img src='https://i.postimg.cc/FHYKVPwD/plantas_1920.jpg'/>
         <Carousel.Caption className='bottom-10'>
-          {/* <h3>Tecnología al alcance de tu hogar</h3>
-          <p>
-            Descubre una experiencia de compra simple y segura, con productos innovadores que se adaptan a tu estilo de vida digital.
-          </p> */}
           <h1 className="text-center mx-auto">UN COMPROMISO CON EL PLANETA</h1>
           <img
             className="logoRockVerde img-fluid w-25 mx-auto mb-2"
@@ -44,17 +40,15 @@ function CarouselInicio() {
       <Carousel.Item>
         <img src='https://i.postimg.cc/0N0bn1w7/reutilizables-carrusel.jpg'/>
         <Carousel.Caption className=''>
-          <h3> Fotografía de producto profesional</h3>
-          <p>Tu escaparate digital merece lo mejor. Inspírate en cómo mostrar tus productos de forma atractiva y profesional.</p>
+          <h3>Biodegradables</h3>
+          <p>Artículos fabricados con materiales que se descomponen sin dañar el medio ambiente.</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img src={imagen3}/>
         <Carousel.Caption className=''>
-          <h3>Moda inteligente, estilo auténtico</h3>
-          <p>
-            Encuentra ropa y accesorios únicos mientras disfrutas de una compra cómoda y personalizada desde donde estés.
-          </p>
+          <h3>Productos Sostenibles</h3>
+          <p>Que promueven la economía circular y reducen el impacto ambiental.</p>
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>

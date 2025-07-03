@@ -7,13 +7,13 @@ import { CarritoContext } from "../contexts/CarritoContext";
 import { Button } from "react-bootstrap";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useProductosContext } from "../contexts/ProductosContext";
+import {ToastContainer, toast} from "react-toastify"
 
 function ProductoDetalle({}) {
   const {agregarAlCarrito} = useContext(CarritoContext);
   const {admin}= useAuthContext();
   const {obtenerUnProducto, productoSeleccionado, eliminarProducto} = useProductosContext();
   const { id } = useParams();
-  //const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -50,6 +50,7 @@ function ProductoDetalle({}) {
     if (cantidad < 1) return;
     dispararSweetAlertBasico("Producto Agregado", "El producto fue agregado al carrito con éxito", "success", "Cerrar");
     agregarAlCarrito({ ...productoSeleccionado, cantidad });
+    toast.success('Agregado al carrito con existo');
   }
 
   function sumarContador() {
@@ -88,6 +89,7 @@ function ProductoDetalle({}) {
             </div>
             <div className="d-flex  flex-column ">
               <Button className="mx-auto mb-2 " variant="outline-primary" onClick={funcionCarrito}>Agregar al carrito</Button>
+             <ToastContainer></ToastContainer>
               <Link className="mx-auto mb-2" to={"/productos/"}> <Button variant="outline-success ">Volver a Productos</Button> </Link>
               <Link to={"/carrito"}><Button  variant="outline-warning">Ir a Carrito</Button></Link>
             </div>  

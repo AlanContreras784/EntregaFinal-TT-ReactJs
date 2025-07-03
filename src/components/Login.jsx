@@ -4,6 +4,7 @@ import { useAuthContext } from '../contexts/AuthContext';
 import { loginEmailPass } from '../Auth/firebase';
 import { Button,Form, Container, Card, Alert } from 'react-bootstrap';
 import { dispararSweetAlertBasico } from "../assets/SweetAlert";
+import {ToastContainer, toast} from "react-toastify";
 
 function Login() {
   const [usuario, setUsuario] = useState('');
@@ -17,6 +18,7 @@ function Login() {
       e.preventDefault();
       loginEmailPass(usuario,password).then((user)=>{
         login(usuario);
+        toast.success('Logueo exitoso');
         navigate('/');
         setError('');
       }).catch((error)=>{
@@ -33,6 +35,7 @@ function Login() {
                   dispararSweetAlertBasico("Error", "Email invalido", "error", "Cerrar")
                   setError('Formato de email invalido. "ejemplo@mail.com" ')
             }
+            toast.error(error.code);
       }
     )
   }
@@ -57,9 +60,11 @@ function Login() {
             </Form.Group>
             <Button className='me-4 mb-3' variant="primary"  type='submit'>Entrar</Button>
             <Link to={'/registrarse'}><Button className='mb-3' variant='outline-primary'>Registrarse</Button></Link>
+            <ToastContainer/>
           </Form>
           </Card.Body>
         </Card>
+        
     </Container>
   );
 }

@@ -8,6 +8,7 @@ export function ProductosProvider({ children }) {
 
     const [productos, setProductos] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState([]);
+    const [productosBuscados,setProductosBuscados]=useState([]);
 
 //-------------------FUNCION OBTENER PRODUCTOS DE LA API------------------------------  
     function obtenerProductos() {
@@ -20,6 +21,7 @@ export function ProductosProvider({ children }) {
                     .then((datos) => {
                         console.log(datos)
                         setProductos(datos)
+                        setProductosBuscados(datos)
                         res(datos)
                     })
                     .catch((error) => {
@@ -131,9 +133,31 @@ const eliminarProducto = (id) => {
     )
 }
 
+//----FUNCION  BUSQUEDA O FILTRAR PRODUCTOS POR NOMBRE Y CATEGORIA  DE LA API ----------
+
+
+function filtrarProductos(busqueda) {
+  const texto = (typeof busqueda === 'string' ? busqueda : busqueda?.name || '').toLowerCase();
+
+  if (texto === '') {
+    setProductos(productosBuscados);
+    return;
+  }
+
+  const productosFiltrados = productosBuscados.filter((producto) => {
+    const nombre = producto.name?.toLowerCase() || '';
+    const categoria = producto.categoria?.toLowerCase() || '';
+
+    return nombre.includes(texto) || categoria.includes(texto);
+  });
+
+  setProductos(productosFiltrados);
+}
+
+
 
 return (
-    <ProductosContext.Provider value={{productos, obtenerProductos, agregarProducto,productoSeleccionado, obtenerUnProducto, editarProducto, eliminarProducto }}>
+    <ProductosContext.Provider value={{productos, obtenerProductos, agregarProducto,productoSeleccionado, obtenerUnProducto, editarProducto, eliminarProducto,filtrarProductos }}>
         {children}
     </ProductosContext.Provider> );
 }

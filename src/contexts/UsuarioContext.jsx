@@ -1,5 +1,4 @@
 import { createContext, useState, useContext } from 'react';
-import Swal from "sweetalert2";
 import { editarUsuario, eliminarUsuario, obtenerUsuarioEnFirebase, obtenerUsuarios } from '../Auth/firebase.js';
 
 

@@ -7,17 +7,20 @@ import { CarritoProvider } from './contexts/CarritoContext.jsx'
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import { ProductosProvider } from './contexts/ProductosContext.jsx';
 import { UsuariosProvider } from './contexts/UsuarioContext.jsx';
+import { HelmetProvider } from 'react-helmet-async';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <UsuariosProvider>
     <ProductosProvider>
+    <HelmetProvider>
+    <UsuariosProvider>
     <AuthProvider>
     <CarritoProvider>
       <App />
     </CarritoProvider>
     </AuthProvider>
-    </ProductosProvider>
     </UsuariosProvider>
+    </HelmetProvider>
+    </ProductosProvider>
   </StrictMode>,
 )

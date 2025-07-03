@@ -5,11 +5,17 @@ import { Link, useNavigate, useParams} from "react-router-dom";
 import { useContext, useEffect, useState } from 'react';
 import { CarritoContext } from '../contexts/CarritoContext';
 import { useAuthContext } from "../contexts/AuthContext";
+import { useProductosContext } from "../contexts/ProductosContext";
+import { useLocation } from 'react-router-dom';
+
 
 function Header() {
     const {user, admin, logout}= useAuthContext();
     const {productosCarrito} = useContext(CarritoContext);
     const navigate= useNavigate();
+    const [busqueda,setBusqueda]=useState('');
+    const {filtrarProductos}=useProductosContext();
+    const location = useLocation();
 
     function obtenerUsername(token){
         const email = token.replace('fake-token-', '');
@@ -23,6 +29,13 @@ function Header() {
     function handleLogout(){
         logout();
     }
+
+    useEffect(() => {
+        filtrarProductos(busqueda);
+        if (location.pathname !== '/productos') {
+            navigate('/productos');
+        }
+    }, [busqueda]);
 
     return (
         <header className="header ">
@@ -51,13 +64,20 @@ function Header() {
                             <Nav.Link href="#" as={Link} to={'/about'} className='nav-link me-auto'>Nosotros</Nav.Link> 
                             <InputGroup className="d-flex  align-items-center me-auto border-boton  ">
                                 <Form.Control
-                                placeholder="Busqueda"
+                                placeholder="Buscar productos"
                                 type="search"
                                 aria-label="Search"
                                 aria-describedby="basic-addon2"
+                                value={busqueda}
+                                // onChange={(e) => setBusqueda(e.target.value)}
+                                onChange={(e) => {
+                                    const valor = e.target.value;
+                                    setBusqueda(valor);
+                                    filtrarProductos(valor);
+                                    }}
                                 className=""
                                 />
-                                <Button variant="" className=" px-3 "  id="button-addon2">
+                                <Button variant="" className=" px-3 "  id="button-addon2" onClick={() => filtrarProductos(busqueda)}>
                                 <i className="fa-solid fa-magnifying-glass fa-lg" style={{color: '#ffffff'}}></i>
                                 </Button>
                             </InputGroup>

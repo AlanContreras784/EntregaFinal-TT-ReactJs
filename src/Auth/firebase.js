@@ -236,16 +236,3 @@ export function eliminarUsuario(id){
         })
     )
 }
-
-
-/*crearProducto("test", "url", 23, "klasjdklsajdsaldkklasdljka").then(() => {
-    console.log("si")
-}).catch((error) => {
-    console.log(error)
-})*/
-
-/*obtenerProductos().then((prod) => {
-    console.log(prod)
-}).catch((error) => {
-    console.log(error)
-})*/

@@ -2,7 +2,6 @@ import {useEffect, useState } from "react"
 import "../styles/Productos.css"
 import { useProductosContext } from "../contexts/ProductosContext";
 import CardProducto from "./CardProducto";
-import {Helmet} from 'react-helmet-async'
 import { Button, Col, Container, Pagination, Row } from "react-bootstrap";
 import GifCargando from "../assets/img/Gif_Cargando.gif"
 
@@ -42,10 +41,6 @@ function Biodegradables(){
     }else{
         return(
             <Container >
-                <Helmet>
-                    <title>Cero Huella | Productos</title>
-                    <meta name="description" content="Explora nuestra variedad de productos." />
-                </Helmet>
                 <h1 className="fst-italic fs-3 w-100 mt-5 mb-4" >BIODEGRADABLES</h1>
                 <Row  xs={1} md={2} lg={3} className=" mb-4  ">
                         {productosActuales.map((producto) => (

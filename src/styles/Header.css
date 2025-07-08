@@ -80,3 +80,8 @@
     outline: 5;
     box-shadow: none;
 }
+
+
+.dropdown-menu{
+    --bs-dropdown-link-hover-bg:#7cb744e0;
+}

@@ -24,7 +24,7 @@ function CarouselInicio() {
             Innovación que respeta el medio ambiente. Creamos piezas únicas que
             minimizan nuestra huella ecológica.
           </p>
-          <Button variant='outline-success'><Link className='nav-link ' to={"/productos"} 
+          <Button variant='outline-success'><Link className='nav-link ' to={"/productos"} aria-label='nuestros productos'
             >NUESTROS PRODUCTOS
           </Link></Button>
         </div>

@@ -88,7 +88,7 @@ function Header() {
                                 </Button>
                             </InputGroup>
                             {admin ? <Nav.Link href="#" eventKey={'/admin/usuarios'} as={Link} to={'/admin/usuarios'} className='nav-link me-auto'>Usuarios</Nav.Link> : <></> }
-                            <Nav.Link href="#" eventKey={'/carrito'} as={Link} to={'/carrito'} className='mx-1 mt-2 nav-link position-relative me-auto'><i className= " fa-solid fa-cart-shopping fa-lg"><Badge pill bg="danger"  className="position-absolute  me-5 translate-middle badge-small">{productosCarrito.length>0 ? productosCarrito.length : ""}</Badge></i></Nav.Link>
+                            <Nav.Link href="#" eventKey={'/carrito'} as={Link} to={'/carrito'} aria-label="carrito de compras" className='mx-1 mt-2 nav-link position-relative me-auto'><i className= " fa-solid fa-cart-shopping fa-lg"><Badge pill bg="danger"  className="position-absolute  me-5 translate-middle badge-small">{productosCarrito.length>0 ? productosCarrito.length : ""}</Badge></i></Nav.Link>
                             <Nav.Link href="#" eventKey={'/login'} as={Link} to={'/login'} className='mx-0 ms-0 nav-link me-auto'><Button size="sm" variant="outline-light" className="border-0 " onClick={ !user ? handleNavigateLogin : handleLogout}>{ !user ? <i className="fa-solid fa-user fa-xl" style={{color:"#ffffff"}}></i> : <span size="sm" variant="outline-light" className="border-boton p-1"><i className="fa-solid fa-user" style={{color:"#ffffff"}}></i> : {obtenerUsername(user)}</span>}</Button></Nav.Link>
                             </Nav>
                         </Offcanvas.Body>

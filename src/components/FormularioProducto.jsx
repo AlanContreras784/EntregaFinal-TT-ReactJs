@@ -16,6 +16,7 @@ function FormularioProducto({}) {
         price: '',
         description: '',
         imagen: "",
+        category:"",
     });
 
     const validarFormulario = () => {
@@ -46,7 +47,7 @@ function FormularioProducto({}) {
         const validarForm = validarFormulario()
         if (validarForm == true) {
         agregarProducto(producto).then((data) => {
-            setProducto({ name: '', price: '', description: '', imagen: ""});
+            setProducto({ name: '', price: '', description: '', imagen: "", category:""});
             setError('')
             dispararSweetAlertBasico("Producto Agregado", "El producto fue agregado con éxito", "success", "Cerrar");
             //navigate("/productos/");
@@ -85,6 +86,11 @@ function FormularioProducto({}) {
                     <Form.Group className="mb-3 text-start">
                         <FloatingLabel controlId="floatingInput" label="Precio" className="mb-4">
                         <Form.Control type="number" name="price" placeholder='precio' value={producto.price} onChange={handleChange} min="0"></Form.Control>
+                        </FloatingLabel>
+                    </Form.Group>
+                    <Form.Group className="mb-3 text-start">
+                        <FloatingLabel controlId="floatingInput" label="Categoria" className="mb-4">
+                        <Form.Control type="text"  name="category" placeholder='categoria' value={producto.category} onChange={handleChange} ></Form.Control>
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-3 text-start">

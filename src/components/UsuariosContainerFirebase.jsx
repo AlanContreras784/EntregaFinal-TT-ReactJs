@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import "../styles/Productos.css"
 import CardUsuario from "./CardUsuario.jsx";
 import { useUsuariosContext } from "../contexts/UsuarioContext.jsx";
+import GifCargando from "../assets/img/Gif_Cargando.gif"
 
 function UsuariosContainerFirebase({}){
     const [usuarios, setUsuarios] = useState([])
@@ -24,7 +25,9 @@ function UsuariosContainerFirebase({}){
     }, []);}
 
     if (cargando) {
-        return <p>Cargando Usuarios...</p>;
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{paddingTop:"200%",position:"relative", width:"100%", height:"100%"}}><iframe className="w-50 h-100" src={GifCargando} style={{position:"absolute", top:"0"}} frameBorder="0" allowFullScreen></iframe></div>
+        )
     }else if (error){
         return <p>{error}</p>;
     }else{

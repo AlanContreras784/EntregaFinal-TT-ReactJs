@@ -94,6 +94,11 @@ function FormularioEdicion() {
                       </FloatingLabel>
                   </Form.Group>
                   <Form.Group className="mb-3 text-start">
+                      <FloatingLabel controlId="floatingInput" label="Categoria" className="mb-4">
+                      <Form.Control type="text"  name="category" placeholder='categoria' value={producto.category} onChange={handleChange} ></Form.Control>
+                      </FloatingLabel>
+                  </Form.Group>
+                  <Form.Group className="mb-3 text-start">
                       <FloatingLabel controlId="floatingInput" label='Descripcion' className="mb-4">
                       <Form.Control as="textarea"
                       name="description"

@@ -12,9 +12,10 @@ export function ProductosProvider({ children }) {
 
 //-------------------FUNCION OBTENER PRODUCTOS DE LA API------------------------------  
     function obtenerProductos() {
+        const url= 'https://68100ddf27f2fdac24102328.mockapi.io/productos'
         return(
             new Promise((res, rej) => {
-                fetch('https://68100ddf27f2fdac24102328.mockapi.io/productos')
+                fetch(url)
                     .then((respuesta) =>
                         respuesta.json()
                     )
@@ -32,6 +33,39 @@ export function ProductosProvider({ children }) {
             })
         )
     }
+
+
+function obtenerPorCategoria(categoria) {
+    return new Promise((res, rej) => {
+        fetch('https://68100ddf27f2fdac24102328.mockapi.io/productos')
+            .then(res => res.json())
+            .then(productos => {
+                const categoriaLower = categoria.toLowerCase();
+
+                const filtrados = productos.filter(p =>
+                    p.category?.toLowerCase() === categoriaLower
+                );
+
+                setProductos(filtrados);
+                setProductosBuscados(filtrados);
+                console.log(`Productos de la categoría "${categoria}":`, filtrados);
+                res(filtrados);
+            })
+            .catch(error => {
+                console.error("Error al obtener productos:", error);
+                rej(error);
+            });
+    });
+}
+
+
+
+
+
+
+
+
+
 //--------------------FUNCION AGREGAR PRODUCTO A LA API------------------------------------
     const agregarProducto = (producto) => {
         return(
@@ -146,7 +180,7 @@ function filtrarProductos(busqueda) {
 
   const productosFiltrados = productosBuscados.filter((producto) => {
     const nombre = producto.name?.toLowerCase() || '';
-    const categoria = producto.categoria?.toLowerCase() || '';
+    const categoria = producto.category?.toLowerCase() || '';
 
     return nombre.includes(texto) || categoria.includes(texto);
   });
@@ -157,7 +191,7 @@ function filtrarProductos(busqueda) {
 
 
 return (
-    <ProductosContext.Provider value={{productos, obtenerProductos, agregarProducto,productoSeleccionado, obtenerUnProducto, editarProducto, eliminarProducto,filtrarProductos }}>
+    <ProductosContext.Provider value={{productos, obtenerProductos, agregarProducto,productoSeleccionado, obtenerUnProducto, editarProducto, eliminarProducto,filtrarProductos, obtenerPorCategoria }}>
         {children}
     </ProductosContext.Provider> );
 }

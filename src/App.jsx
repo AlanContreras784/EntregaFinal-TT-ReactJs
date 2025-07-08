@@ -18,6 +18,9 @@ import { useAuthContext } from './contexts/AuthContext';
 import UsuariosContainerFirebase from './components/UsuariosContainerFirebase';
 import UsuarioDetalleFirebase from './components/UsuarioDetalleFirebase';
 import FormularioEdicionUsuario from './components/FormularioEdicionUsuario';
+import Reutilizables from './components/Reutilizables';
+import Biodegradables from './components/Biodegradables';
+import BolsasYLamparas from './components/BolsasYLamparas';
 
 
 function App() {
@@ -41,6 +44,9 @@ function App() {
             <Route path="/carrito" element={<Carrito/> }/>
             <Route path="/productos" element={<ProductosContainer/>} />
             <Route path="/productos/:id" element={<ProductoDetalle/>} />
+            <Route path='/reutilizables' element={<Reutilizables/>}/>
+            <Route path='/biodegradables' element={<Biodegradables/>}/>
+            <Route path='/bolsasYlamparas' element={<BolsasYLamparas/>}/>
             <Route path="/admin/agregarProductos" element={<FormularioProducto/>}/>
             <Route path='/admin/editarProducto/:id' element={<FormularioEdicion/>}/>
             <Route path="/login" element={<Login/>}/>

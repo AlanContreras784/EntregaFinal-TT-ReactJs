@@ -44,7 +44,7 @@ function FormularioConSweetAlert() {
   return (
     <Container fluid  >
       <Row className='mt-5  justify-content-center align-items-center mb-5 '>
-        <Col xs={12} md={6} className='mb-4 mb-md-3 d-flex justify-content-center align-items-center'>
+        <Col xs={12} md={6} className='mb-4 mb-md-3 d-flex justify-content-center align-items-center' style={{ width: "26rem" }}>
           <Card className='shadow-lg mb-2' style={{ width: "24rem" }}>
             <Card.Body>
             <Card.Title className="mb-3 text-center"><h2>Escribenos...!</h2></Card.Title>

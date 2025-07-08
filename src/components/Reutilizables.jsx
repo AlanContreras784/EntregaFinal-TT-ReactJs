@@ -7,8 +7,8 @@ import { Button, Col, Container, Pagination, Row } from "react-bootstrap";
 import GifCargando from "../assets/img/Gif_Cargando.gif"
 
 
-function ProductosContainer(){
-    const {productos, obtenerProductos} = useProductosContext();
+function Reutilizables(){
+    const {productos, obtenerProductos,obtenerPorCategoria} = useProductosContext();
     const [error, setError] = useState(null);
     const [cargando, setCargando]= useState(true);
     //Para Paginación----------------------------------------------
@@ -24,7 +24,7 @@ function ProductosContainer(){
 
     
     {useEffect(() => {
-        obtenerProductos().then((productos) => {
+        obtenerPorCategoria("reutilizables").then((productos) => {
             setCargando(false);
         }).catch((error) => {
             setError('Hubo un problema al cargar los productos.');
@@ -46,7 +46,7 @@ function ProductosContainer(){
                     <title>Cero Huella | Productos</title>
                     <meta name="description" content="Explora nuestra variedad de productos." />
                 </Helmet>
-                <h1 className="fst-italic fs-3 w-100 mt-5 mb-4" >NUESTROS PRODUCTOS</h1>
+                <h1 className="fst-italic fs-3 w-100 mt-5 mb-4" >REUTILIZABLES</h1>
                 <Row  xs={1} md={2} lg={3} className=" mb-4  ">
                         {productosActuales.map((producto) => (
                             <Col key={producto.id} className="mb-3 g-4 d-flex justify-content-center align-items-center  ">
@@ -75,4 +75,4 @@ function ProductosContainer(){
     
 }
 
-export default ProductosContainer
+export default Reutilizables

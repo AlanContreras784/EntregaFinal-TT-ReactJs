@@ -1,6 +1,6 @@
 import Logo from "../assets/img/Logo Cero Huella Horiz.png"
 import "../styles/Header.css"
-import {Container, Navbar, Nav, Badge, NavDropdown, Offcanvas, Form, Button, InputGroup} from 'react-bootstrap';
+import {Container, Navbar, Nav, Badge, NavDropdown, Offcanvas, Form, Button, InputGroup, NavItem} from 'react-bootstrap';
 import { Link, useNavigate, useParams} from "react-router-dom";
 import { useContext, useEffect, useState } from 'react';
 import { CarritoContext } from '../contexts/CarritoContext';
@@ -51,17 +51,24 @@ function Header() {
                     className='ps-0'
                     >
                         <Offcanvas.Header  closeButton>
-                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`} as={Link} to={'/'} href="#home">
-                            <img className="w-25 h-25 me-auto" src={Logo} alt="" />
+                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`} as={Link} to={'/'} href="#">
+                            <img className="w-25 h-25 me-auto" src={Logo} alt="logo" />
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
-                            <Nav className="justify-content-end  flex-grow-1 pe-3">
-                            <Nav.Link href="#" as={Link} to={'/'}>Home</Nav.Link>
-                            <Nav.Link href="#" as={Link} to={'/productos'} className='nav-link'>Productos</Nav.Link>
-                            {admin ? <Nav.Link href="#" as={Link} to={'/admin/agregarProductos'} className='nav-link'>Agregar Productos</Nav.Link> : <></>}
-                            <Nav.Link href="#" as={Link} to={'/contacto'} className='nav-link'>Contacto</Nav.Link>
-                            <Nav.Link href="#" as={Link} to={'/about'} className='nav-link me-auto'>Nosotros</Nav.Link> 
+                            <Nav variant="underline"  className="justify-content-around  flex-grow-1 ">
+                            <Nav.Link href="#" eventKey={'/'} as={Link} to={'/'} className='nav-link me-auto'>Home</Nav.Link>
+                            {/* <Nav.Link href="#" eventKey={'/productos'} as={Link} to={'/productos'} className='nav-link'>Productos</Nav.Link> */}
+                            <Nav.Link href="#" eventKey={'/contacto'} as={Link} to={'/contacto'} className='nav-link me-auto'>Contacto</Nav.Link>
+                            <Nav.Link href="#" eventKey={'/about'} as={Link} to={'/about'} className='nav-link  me-auto'>Nosotros</Nav.Link>
+                            <NavDropdown title="Productos" id="nav-dropdown" className=" me-auto">
+                                <NavDropdown.Item  eventKey="/reutilizables" as={Link} to={'/reutilizables'}>Reutilizables</NavDropdown.Item>
+                                <NavDropdown.Item eventKey="/biodegradables" as={Link} to={'/biodegradables'}>Biodegradables</NavDropdown.Item>
+                                <NavDropdown.Item eventKey="/bolsasYlamparas" as={Link} to={'/bolsasYlamparas'}>Bolsas y Lamparas</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item eventKey="/productos" as={Link} to={'/productos'}>Todos</NavDropdown.Item>
+                            </NavDropdown> 
+                            {admin ? <Nav.Link href="#" as={Link} to={'/admin/agregarProductos'} className='nav-link me-auto'>Agregar Productos</Nav.Link> : <></>}
                             <InputGroup className="d-flex  align-items-center me-auto border-boton  ">
                                 <Form.Control
                                 placeholder="Buscar productos"
@@ -75,15 +82,14 @@ function Header() {
                                     setBusqueda(valor);
                                     filtrarProductos(valor);
                                     }}
-                                className=""
                                 />
                                 <Button variant="" className=" px-3 "  id="button-addon2" onClick={() => filtrarProductos(busqueda)}>
                                 <i className="fa-solid fa-magnifying-glass fa-lg" style={{color: '#ffffff'}}></i>
                                 </Button>
                             </InputGroup>
-                            {admin ? <Nav.Link href="#" as={Link} to={'/admin/usuarios'} className='nav-link'>Usuarios</Nav.Link> : <></> }
-                            <Nav.Link href="#" as={Link} to={'/carrito'} className='mx-1 mt-2 nav-link position-relative'><i className= " fa-solid fa-cart-shopping fa-lg"><Badge pill bg="danger"  className="position-absolute  me-5 translate-middle badge-small">{productosCarrito.length>0 ? productosCarrito.length : ""}</Badge></i></Nav.Link>
-                            <Nav.Link href="#" as={Link} to={'/login'} className='mx-0 ms-0 nav-link'><Button size="sm" variant="outline-light" className="border-0 " onClick={ !user ? handleNavigateLogin : handleLogout}>{ !user ? <i className="fa-solid fa-user fa-xl" style={{color:"#ffffff"}}></i> : <span size="sm" variant="outline-light" className="border-boton p-1"><i className="fa-solid fa-user" style={{color:"#ffffff"}}></i> : {obtenerUsername(user)}</span>}</Button></Nav.Link>
+                            {admin ? <Nav.Link href="#" eventKey={'/admin/usuarios'} as={Link} to={'/admin/usuarios'} className='nav-link me-auto'>Usuarios</Nav.Link> : <></> }
+                            <Nav.Link href="#" eventKey={'/carrito'} as={Link} to={'/carrito'} className='mx-1 mt-2 nav-link position-relative me-auto'><i className= " fa-solid fa-cart-shopping fa-lg"><Badge pill bg="danger"  className="position-absolute  me-5 translate-middle badge-small">{productosCarrito.length>0 ? productosCarrito.length : ""}</Badge></i></Nav.Link>
+                            <Nav.Link href="#" eventKey={'/login'} as={Link} to={'/login'} className='mx-0 ms-0 nav-link me-auto'><Button size="sm" variant="outline-light" className="border-0 " onClick={ !user ? handleNavigateLogin : handleLogout}>{ !user ? <i className="fa-solid fa-user fa-xl" style={{color:"#ffffff"}}></i> : <span size="sm" variant="outline-light" className="border-boton p-1"><i className="fa-solid fa-user" style={{color:"#ffffff"}}></i> : {obtenerUsername(user)}</span>}</Button></Nav.Link>
                             </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>

@@ -5,6 +5,7 @@ import { Alert, Button, Card, Container, Form, } from "react-bootstrap";
 import { dispararSweetAlertBasico } from "../assets/SweetAlert";
 import { crearUsuarioEnFirebase } from "../Auth/firebase";
 import { crearUsuario } from '../Auth/firebase';
+import {ToastContainer, toast} from "react-toastify"
 
 
 function Registrarse() {
@@ -18,23 +19,14 @@ function Registrarse() {
     const { login} = useAuthContext();
     const navigate = useNavigate();
     const [error, setError] = useState();
-    //const [preview, setPreview] = useState('https://i.postimg.cc/Rh2g9nkn/usuario_Admin.png');
-
-    // const handleImagenChange = (e) => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         setImagen(file);
-    //         const url = URL.createObjectURL(file);
-    //         setPreview(url);
-    //     }
-    // };
-
+    
     function registrarUsuario (e) {
         e.preventDefault();
         crearUsuario(email, password).then((user) => {
             
             crearUsuarioEnFirebase(name, imagen,age,email,country)
             login(email)
+            toast.success('Registroeitoso')
             dispararSweetAlertBasico("Registro exitoso", "", "success", "Confirmar")
             navigate('/login')
             }).catch((error) => {
@@ -64,19 +56,6 @@ function Registrarse() {
                 <Card.Title className="mb-3 text-center"><h2>Registrarse</h2></Card.Title>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={registrarUsuario}>
-                    {/* <Form.Group className="mb-3 text-start">
-                        {preview && (
-                                    <div className='d-flex justify-content-center aling-items-center' style={{ marginTop: '10px' }}>
-                                        <img src={preview} alt="Preview" className='mb-3' style={{ maxWidth: '50%', borderRadius: '8px' }} />
-                                    </div>
-                                )}
-                        <Form.Control  
-                            type="file" 
-                            accept="image/*" 
-                            capture="environment" 
-                            name="foto" 
-                            onChange={handleImagenChange} />
-                    </Form.Group> */}
                     <Form.Group className="mb-3 text-start">
                         <Form.Label >Email:</Form.Label>
                         <Form.Control value={email} type="email" onChange={(e) => setEmail(e.target.value)  } />
@@ -104,6 +83,7 @@ function Registrarse() {
                     <Button className='mb-3 me-4' variant="primary" type='submit'>Registrarse</Button>
                     <Link to={'/login'}><Button className="mb-3" variant='outline-primary'>Login in</Button></Link>
                 </Form>
+                <ToastContainer/>
                 </Card.Body>
             </Card>
         </Container>

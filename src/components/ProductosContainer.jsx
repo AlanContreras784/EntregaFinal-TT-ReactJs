@@ -2,7 +2,7 @@ import {useEffect, useState } from "react"
 import "../styles/Productos.css"
 import { useProductosContext } from "../contexts/ProductosContext";
 import CardProducto from "./CardProducto";
-import { Button, Col, Container, Pagination, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import GifCargando from "../assets/img/Gif_Cargando.gif"
 
 

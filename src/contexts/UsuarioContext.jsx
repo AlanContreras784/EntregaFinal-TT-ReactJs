@@ -31,7 +31,7 @@ export function UsuariosProvider({ children }) {
                     setUsuarioSeleccionado(usuario)
                     res(usuario)
                 }).catch((err) => {
-                    console.log("Error:", err);
+                    //console.log("Error:", err);
                     rej("Hubo un error al obtener el usuario.");
                 }); 
             })

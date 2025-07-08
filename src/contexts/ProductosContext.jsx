@@ -20,19 +20,21 @@ export function ProductosProvider({ children }) {
                         respuesta.json()
                     )
                     .then((datos) => {
-                        console.log(datos)
                         setProductos(datos)
                         setProductosBuscados(datos)
                         res(datos)
                     })
                     .catch((error) => {
-                        console.log("Error", error)
+                        //console.log("Error", error)
                         rej(error)
                     })
                 ;
             })
         )
     }
+
+
+//-------------------FUNCION OBTENER PRODUCTOS POR CATEGORIA DE LA API------------------------------ 
 
 
 function obtenerPorCategoria(categoria) {
@@ -48,22 +50,15 @@ function obtenerPorCategoria(categoria) {
 
                 setProductos(filtrados);
                 setProductosBuscados(filtrados);
-                console.log(`Productos de la categoría "${categoria}":`, filtrados);
+                //console.log(`Productos de la categoría "${categoria}":`, filtrados);
                 res(filtrados);
             })
             .catch(error => {
-                console.error("Error al obtener productos:", error);
+                //console.error("Error al obtener productos:", error);
                 rej(error);
             });
     });
 }
-
-
-
-
-
-
-
 
 
 //--------------------FUNCION AGREGAR PRODUCTO A LA API------------------------------------
@@ -83,12 +78,10 @@ function obtenerPorCategoria(categoria) {
                             throw new Error('Error al agregar el producto.');
                     }
                     const data = await respuesta.json();
-                    console.log('Producto agregado:', data);
+                    //console.log('Producto agregado:', data);
                     res(data)
-                            //alert('Producto agregado correctamente');
                     } catch (error) {
-                        console.error(error.message);
-                        //alert('Hubo un problema al agregar el producto.');
+                        //console.error(error.message);
                         rej(error.message)
                     }
             })
@@ -112,7 +105,7 @@ function obtenerPorCategoria(categoria) {
                 }
                 })
                 .catch((error) => {
-                console.log("Error:", error);
+                //console.log("Error:", error);
                 rej(error)
                 });
         })
@@ -139,7 +132,7 @@ function editarProducto(producto){
                 const data = await respuesta.json();
                 res(data);
             } catch (error) {
-                console.error(error.message);
+                //console.error(error.message);
                 rej(error);
             }   
 
@@ -160,7 +153,7 @@ const eliminarProducto = (id) => {
                 if (!respuesta.ok) throw new Error('Error al eliminar');
                 res()
             } catch (error) {
-                console.error(error.message);
+                //console.error(error.message);
                 rej(error)
             }
         })

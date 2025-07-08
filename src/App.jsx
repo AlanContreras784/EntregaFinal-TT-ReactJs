@@ -9,7 +9,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import FormularioConSweetAlert from './components/FormularioConSweetAlert';
 import ProductoDetalle from './components/ProductoDetalle';
-import Admin from './components/Admin';
 import Login from './components/Login';
 import Registrarse from './components/Registrarse';
 import FormularioProducto from './components/FormularioProducto';
@@ -21,6 +20,7 @@ import FormularioEdicionUsuario from './components/FormularioEdicionUsuario';
 import Reutilizables from './components/Reutilizables';
 import Biodegradables from './components/Biodegradables';
 import BolsasYLamparas from './components/BolsasYLamparas';
+
 
 
 function App() {

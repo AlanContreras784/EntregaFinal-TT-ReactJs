@@ -13,12 +13,12 @@ function UsuariosContainerFirebase({}){
     {useEffect(() => {
         obtenerUsuariosFirebase()
             .then((datos) => {
-                console.log(datos)
+                //console.log(datos)
                 setUsuarios(datos)
                 setCargando(false);
             })
             .catch((error) => {
-                console.log("Error", error)
+                //console.log("Error", error)
                 setError('Hubo un problema al cargar los usuarios.');
                 setCargando(false);
             });

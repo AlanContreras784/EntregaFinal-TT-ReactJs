@@ -1,6 +1,4 @@
 import { Container, Image, Row } from "react-bootstrap";
-import { FaShoppingCart, FaSmileBeam, FaBolt } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import video from "../assets/video/ROCK&VIDARECICLA.mp4"
 export default function About() {
   return (

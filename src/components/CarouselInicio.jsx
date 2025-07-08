@@ -1,8 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
-import imagen1 from '../assets/img/carousel_01.jpg';
 import imagen2 from '../assets/img/carousel_02.jpg';
 import imagen3 from '../assets/img/carousel_03.jpg';
-import imagen4 from '../assets/img/carousel_04.jpg';
 import '../styles/Carousel.css'
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';

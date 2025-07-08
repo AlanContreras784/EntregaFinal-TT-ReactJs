@@ -67,7 +67,6 @@ export function CarritoProvider({ children }) {
                 });
             }
         });
-        console.log(id)
     }
 
     return (

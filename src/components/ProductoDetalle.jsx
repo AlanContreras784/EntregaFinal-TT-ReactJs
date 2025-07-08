@@ -89,7 +89,7 @@ function ProductoDetalle({}) {
             </div>
             <div className="d-flex  flex-column ">
               <Button className="mx-auto mb-2 " variant="outline-primary" onClick={funcionCarrito}>Agregar al carrito</Button>
-             <ToastContainer></ToastContainer>
+              <ToastContainer></ToastContainer>
               <Link className="mx-auto mb-2" to={"/productos/"}> <Button variant="outline-success ">Volver a Productos</Button> </Link>
               <Link to={"/carrito"}><Button  variant="outline-warning">Ir a Carrito</Button></Link>
             </div>  

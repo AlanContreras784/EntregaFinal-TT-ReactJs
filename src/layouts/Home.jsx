@@ -8,9 +8,6 @@ function Home() {
             <section>
                 <CarouselInicio/>
             </section>
-            <section>
-
-            </section>
         </div>
         
     )

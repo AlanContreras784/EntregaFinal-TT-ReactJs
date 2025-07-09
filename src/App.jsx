@@ -1,7 +1,8 @@
-import { useEffect} from 'react'
 import './App.css'
-import Home from './layouts/Home'
+import { useEffect} from 'react'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { useAuthContext } from './contexts/AuthContext';
+import Home from './layouts/Home'
 import ProductosContainer from './components/ProductosContainer';
 import Carrito from './components/Carrito';
 import About from './components/About';
@@ -13,7 +14,6 @@ import Login from './components/Login';
 import Registrarse from './components/Registrarse';
 import FormularioProducto from './components/FormularioProducto';
 import FormularioEdicion from './components/FormularioEdicion';
-import { useAuthContext } from './contexts/AuthContext';
 import UsuariosContainerFirebase from './components/UsuariosContainerFirebase';
 import UsuarioDetalleFirebase from './components/UsuarioDetalleFirebase';
 import FormularioEdicionUsuario from './components/FormularioEdicionUsuario';
@@ -33,8 +33,6 @@ function App() {
 
   
   return (
-    
-      <div>
         <Router>
           <Header/>
           <Routes>
@@ -57,8 +55,6 @@ function App() {
           </Routes>
           <Footer/>
         </Router>
-      </div>
-    
   )
 }
 

@@ -42,7 +42,7 @@ function Header() {
         <header className="header ">
             <Navbar collapseOnSelect expand='lg' className="fs-6 py-1" variant="dark">
                 <Container className="mt-1 mb-1" fluid>
-                    <Navbar.Brand as={Link} to={'/'} href="#home"><img className="logo  me-auto" src={Logo} alt="" /></Navbar.Brand>
+                    <Navbar.Brand as={Link} to={'/'} href="#"><img className="logo  me-auto" src={Logo} alt="" /></Navbar.Brand>
                     <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
                     <Navbar.Offcanvas
                     id={`offcanvasNavbar-expand-lg`}

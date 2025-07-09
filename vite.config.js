@@ -6,17 +6,29 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    sourcemap: false, // desactiva los mapas de fuente en producción
-    minify: 'esbuild', // compresión más rápida y efectiva
-    cssCodeSplit: true, // divide los CSS por componentes
-    brotliSize: true,   // calcula tamaños para brotli (útil para medir)
-  },
-  server: {
-    port: 3000,
+    sourcemap: false,          // elimina mapas de fuente en producción
+    minify: 'esbuild',         // compresión rápida
+    cssCodeSplit: true,        // divide el CSS por componente
+    brotliSize: true,          // útil para medir compresión
+    chunkSizeWarningLimit: 1000, // sube el límite del warning de 500 KB a 1000 KB
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('firebase')) return 'firebase';
+            if (id.includes('react')) return 'react';
+            return 'vendor';
+          }
+        }
+      }
+    }
   },
   resolve: {
     alias: {
       '@': '/src',
     },
+  },
+  server: {
+    port: 3000,
   },
 })

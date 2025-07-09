@@ -8,6 +8,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { useProductosContext } from "../contexts/ProductosContext";
 import { useLocation } from 'react-router-dom';
 import { CiLogout } from "react-icons/ci";
+import { useRef } from "react";
 
 
 function Header() {
@@ -30,11 +31,16 @@ function Header() {
     function handleLogout(){
         logout();
     }
+    const firstUpdate = useRef(true);
 
     useEffect(() => {
         filtrarProductos(busqueda);
-        if (location.pathname !== '/productos') {
-            navigate('/productos');
+        if (firstUpdate.current) {
+        firstUpdate.current = false;
+        return; // No redirigir en el primer render
+        }
+        if (busqueda !== '' && location.pathname !== '/productos') {
+        navigate('/productos');
         }
     }, [busqueda]);
 

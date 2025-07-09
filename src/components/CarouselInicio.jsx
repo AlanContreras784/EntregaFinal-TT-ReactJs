@@ -9,12 +9,12 @@ function CarouselInicio() {
   return (
     <Carousel className=''>
       <Carousel.Item>
-        <img src='https://i.postimg.cc/FHYKVPwD/plantas_1920.jpg'/>
+        <img src='https://i.postimg.cc/fy3ptSyR/plantas_1920.jpg'/>
         <Carousel.Caption className='bottom-10'>
           <h1 className="text-center mx-auto">UN COMPROMISO CON EL PLANETA</h1>
           <img
             className="logoRockVerde img-fluid w-25 mx-auto mb-2"
-            src="https://i.postimg.cc/gJsdWRfx/R&V_Logo_Verde_1024(2).png"
+            src="https://i.postimg.cc/rpZLDkjg/R&V_Logo_Verde_1024(2).png"
             alt=""
           />
         <div className="divBlur  text-center mx-auto pb-3">
@@ -36,7 +36,7 @@ function CarouselInicio() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <img src='https://i.postimg.cc/0N0bn1w7/reutilizables-carrusel.jpg'/>
+        <img src='https://i.postimg.cc/sxt8pfG9/reutilizables_carrusel.jpg'/>
         <Carousel.Caption className=''>
           <h3>Biodegradables</h3>
           <p>Artículos fabricados con materiales que se descomponen sin dañar el medio ambiente.</p>

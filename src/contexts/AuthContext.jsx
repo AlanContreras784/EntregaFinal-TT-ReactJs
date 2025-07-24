@@ -10,11 +10,11 @@ export function AuthProvider({ children }) {
 
   //--------------------FUNCION INICIAR SESION ------------------------------------
   const login = (username) => {
-    const admin=import.meta.env.VITE_ADMIN;
+    const administrator=import.meta.env.VITE_ADMIN;
     // Simulando la creación de un token (en una app real, esto sería generado por un servidor)
     const token = `fake-token-${username}`;
   
-    if(username===admin){ //contraseña : test12
+    if(username===administrator){ //contraseña : test12
         setAdmin(true);
     }
     localStorage.setItem('authToken', token);
@@ -52,7 +52,8 @@ export function AuthProvider({ children }) {
   //FUNNCION PARA VERIFICACION DE USUARIO Y ADMIN--------------------------
   function verificacionLog(){
     const userToken = localStorage.getItem("authToken")
-    if(userToken && userToken == "fake-token-admin@gmail.com"){
+    const administrator=import.meta.env.VITE_ADMIN;
+    if(userToken && userToken == `fake-token-${administrator}`){
       setAdmin(true)
       setUser(userToken)
       return

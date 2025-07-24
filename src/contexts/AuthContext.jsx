@@ -10,10 +10,11 @@ export function AuthProvider({ children }) {
 
   //--------------------FUNCION INICIAR SESION ------------------------------------
   const login = (username) => {
+    const admin=import.meta.env.VITE_ADMIN;
     // Simulando la creación de un token (en una app real, esto sería generado por un servidor)
     const token = `fake-token-${username}`;
   
-    if(username==="admin@gmail.com"){ //contraseña : test12
+    if(username===admin){ //contraseña : test12
         setAdmin(true);
     }
     localStorage.setItem('authToken', token);

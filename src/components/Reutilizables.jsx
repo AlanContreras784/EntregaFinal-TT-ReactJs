@@ -52,16 +52,30 @@ function Reutilizables(){
                         ))}
                 </Row>
                 <Container className=" my-4">
-                    {Array.from({ length: totalPaginas }, (_, index) => (
                     <Button
-                        key={index + 1}
-                        className='mx-1'
-                        variant={`${paginaActual === index + 1 ? "success" : "outline-success"}`}
-                        onClick={() => cambiarPagina(index + 1)}
-                    >
-                        {index + 1}
+                        className="mx-1"
+                        variant="outline-success"
+                        disabled={paginaActual==1}
+                        onClick={()=>cambiarPagina(paginaActual-1)}
+                    >← Anterior
                     </Button>
+                    {Array.from({ length: totalPaginas }, (_, index) => (
+                        <Button
+                            key={index + 1}
+                            className='mx-1'
+                            variant={`${paginaActual === index + 1 ? "success" : "outline-success"}`}
+                            onClick={() => cambiarPagina(index + 1)}
+                        >
+                            {index + 1}
+                        </Button>
                     ))}
+                    <Button
+                        className="mx-1"
+                        variant="outline-success"
+                        disabled={paginaActual===totalPaginas}
+                        onClick={()=>cambiarPagina(paginaActual+1)}
+                    >Siguiente →
+                    </Button>
                 </Container>
             </Container>
         )

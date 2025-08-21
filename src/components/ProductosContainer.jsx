@@ -4,6 +4,7 @@ import { useProductosContext } from "../contexts/ProductosContext";
 import CardProducto from "./CardProducto";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import GifCargando from "../assets/img/Gif_Cargando.gif"
+import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 
 function ProductosContainer(){
@@ -51,13 +52,14 @@ function ProductosContainer(){
                             </Col>
                         ))}
                 </Row>
-                <Container className=" my-4">
+                <Container className=" my-4 fw-bold">
                     <Button
-                        className="mx-1"
+                        title="Anterior"
+                        className="mx-1 border-0"
                         variant="outline-success"
                         disabled={paginaActual==1}
                         onClick={()=>cambiarPagina(paginaActual-1)}
-                    >← Anterior
+                    ><MdOutlineKeyboardDoubleArrowLeft size={24}  />
                     </Button>
                     {Array.from({ length: totalPaginas }, (_, index) => (
                         <Button
@@ -70,11 +72,12 @@ function ProductosContainer(){
                         </Button>
                     ))}
                     <Button
-                        className="mx-1"
+                        title="Siguiente"
+                        className="mx-1 border-0"
                         variant="outline-success"
                         disabled={paginaActual===totalPaginas}
                         onClick={()=>cambiarPagina(paginaActual+1)}
-                    >Siguiente →
+                    > <MdOutlineKeyboardDoubleArrowRight size={20}  />
                     </Button>
                 </Container>
             </Container>

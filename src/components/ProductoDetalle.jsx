@@ -8,8 +8,10 @@ import { Button } from "react-bootstrap";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useProductosContext } from "../contexts/ProductosContext";
 import {ToastContainer, toast} from "react-toastify"
+import { FaCartPlus, FaRegEdit, FaRegTrashAlt, FaTrashAlt } from "react-icons/fa";
+import { MdAddShoppingCart, MdOutlineAddShoppingCart } from "react-icons/md";
 
-function ProductoDetalle({}) {
+function ProductoDetalle() {
   const {agregarAlCarrito} = useContext(CarritoContext);
   const {admin}= useAuthContext();
   const {obtenerUnProducto, productoSeleccionado, eliminarProducto} = useProductosContext();
@@ -19,7 +21,7 @@ function ProductoDetalle({}) {
   const [error, setError] = useState(null);
   const navigate=useNavigate();
 
-  console.log(id)
+  //console.log(id)
 
   {useEffect(() => {
     obtenerUnProducto(id).then((productoSeleccionado) => {
@@ -75,10 +77,10 @@ function ProductoDetalle({}) {
         <p>{productoSeleccionado.description}</p>
         <h6>$ {productoSeleccionado.price} </h6>
         {admin?
-          <div className="d-flex  flex-column ">
-            <Link to={"/admin/editarProducto/" + id}><Button className="mx-auto mb-2 " variant="outline-warning">Editar Producto</Button></Link>
-            <Button className="mx-auto mb-2 " variant="outline-danger" onClick={dispararEliminar}>Eliminar Producto</Button>
-            <Link to={"/productos"}><Button  variant="outline-success">Ir a Productos</Button></Link>
+          <div className="d-flex justify-content-center align-items-center">
+            <Link title="Editar Producto"  to={"/admin/editarProducto/" + id}><Button className="mx-1 mb-2 " variant="outline-primary"><FaRegEdit size={24} /></Button></Link>
+            <Button title="Eliminar Producto" className="mx-1 mb-2 " variant="outline-danger" onClick={dispararEliminar}><FaRegTrashAlt size={20} /></Button>
+            <Link to={"/productos"}><Button className="mx-1 mb-2 " variant="outline-success">Ir a Productos</Button></Link>
           </div> 
           :
           <div >
@@ -87,11 +89,10 @@ function ProductoDetalle({}) {
                 <span>{cantidad}</span>
                 <button className="ms-3 mb-2 btn btn-light" onClick={sumarContador}>+</button>
             </div>
-            <div className="d-flex  flex-column ">
-              <Button className="mx-auto mb-2 " variant="outline-primary" onClick={funcionCarrito}>Agregar al carrito</Button>
+            <div className="d-flex justify-content-center align-items-center">
+              <Button title="Agregar al carrito" className="mx-1 mb-2 " variant="outline-primary" onClick={funcionCarrito}><MdOutlineAddShoppingCart size={24} /></Button>
               <ToastContainer></ToastContainer>
-              <Link className="mx-auto mb-2" to={"/productos/"}> <Button variant="outline-success ">Volver a Productos</Button> </Link>
-              <Link to={"/carrito"}><Button  variant="outline-warning">Ir a Carrito</Button></Link>
+              <Link className="mx-1 mb-2" to={"/productos/"}> <Button variant="outline-success ">Volver a Productos</Button> </Link>
             </div>  
           </div>
         } 

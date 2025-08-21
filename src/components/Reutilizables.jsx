@@ -4,6 +4,7 @@ import { useProductosContext } from "../contexts/ProductosContext";
 import CardProducto from "./CardProducto";
 import { Button, Col, Container, Pagination, Row } from "react-bootstrap";
 import GifCargando from "../assets/img/Gif_Cargando.gif"
+import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 
 function Reutilizables(){
@@ -53,11 +54,11 @@ function Reutilizables(){
                 </Row>
                 <Container className=" my-4">
                     <Button
-                        className="mx-1"
+                        className="mx-1 border-0"
                         variant="outline-success"
                         disabled={paginaActual==1}
                         onClick={()=>cambiarPagina(paginaActual-1)}
-                    >← Anterior
+                    ><MdOutlineKeyboardDoubleArrowLeft size={20}  />
                     </Button>
                     {Array.from({ length: totalPaginas }, (_, index) => (
                         <Button
@@ -70,11 +71,11 @@ function Reutilizables(){
                         </Button>
                     ))}
                     <Button
-                        className="mx-1"
+                        className="mx-1 border-0"
                         variant="outline-success"
                         disabled={paginaActual===totalPaginas}
                         onClick={()=>cambiarPagina(paginaActual+1)}
-                    >Siguiente →
+                    ><MdOutlineKeyboardDoubleArrowRight size={20}  />
                     </Button>
                 </Container>
             </Container>

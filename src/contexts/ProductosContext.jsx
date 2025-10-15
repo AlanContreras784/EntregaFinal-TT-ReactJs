@@ -12,7 +12,7 @@ export function ProductosProvider({ children }) {
 
 //-------------------FUNCION OBTENER PRODUCTOS DE LA API------------------------------  
     function obtenerProductos() {
-        const url= 'https://68100ddf27f2fdac24102328.mockapi.io/productos'
+        const url= 'https://68100ddf27f2fdac24102328.mockapi.io/productosCeroHuellas'
         return(
             new Promise((res, rej) => {
                 fetch(url)

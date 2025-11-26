@@ -47,7 +47,7 @@ export function crearUsuario(email, password){
                 console.log(error.code, error.message)
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                rej(error);
+                rej(error, errorMessage, errorCode);
                 // ..
             });
         })

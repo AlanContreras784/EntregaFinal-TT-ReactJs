@@ -17,7 +17,7 @@ function Login() {
   function iniciarLoginEmailPass(e){
       e.preventDefault();
       loginEmailPass(usuario,password).then((user)=>{
-        login(usuario);
+        login(usuario,password);
         toast.success('Logueo exitoso');
         navigate('/');
         setError('');

@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { useAuthContext } from '../contexts/AuthContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { dispararSweetAlertBasico } from '../assets/SweetAlert';
 import { Alert, Button, Card, Container, FloatingLabel, Form } from 'react-bootstrap';
 import { useProductosContext } from '../contexts/ProductosContext';
 
-function FormularioProducto({}) {
+function FormularioProducto() {
 
     const {admin} = useAuthContext();
     const [error, setError] = useState("");
     const {agregarProducto} = useProductosContext();
-    const navigate = useNavigate();
+   // const navigate = useNavigate();
     const [producto, setProducto] = useState({
         name: '',
         price: '',
@@ -42,23 +42,23 @@ function FormularioProducto({}) {
         setProducto({ ...producto, [name]: value });
     };
 
-    const handleSubmit2 = (e) => {
-        e.preventDefault();
-        const validarForm = validarFormulario()
-        if (validarForm == true) {
-        agregarProducto(producto).then((data) => {
+    const handleSubmit2 = async (e) => {
+    e.preventDefault();
+    const validarForm = validarFormulario();
+    if (validarForm === true) {
+        try {
+            await agregarProducto(producto);
             setProducto({ name: '', price: '', description: '', imagen: "", category:""});
-            setError('')
+            setError('');
             dispararSweetAlertBasico("Producto Agregado", "El producto fue agregado con éxito", "success", "Cerrar");
-            //navigate("/productos/");
-        }).catch((error) => {
-            dispararSweetAlertBasico("Hubo un problema al agregar el producto", error, "error", "Cerrar")
-        })
-        } else{
-            dispararSweetAlertBasico("Error en la carga de producto", validarForm, "error", "Cerrar")
-            setError(validarForm);
+        } catch (error) {
+            dispararSweetAlertBasico("Hubo un problema al agregar el producto", error.message, "error", "Cerrar");
         }
+    } else {
+        dispararSweetAlertBasico("Error en la carga de producto", validarForm, "error", "Cerrar");
+        setError(validarForm);
     }
+};
 
     if(!admin){
         return(

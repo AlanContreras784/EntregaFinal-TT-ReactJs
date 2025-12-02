@@ -19,8 +19,10 @@ function UsuarioDetalleFirebase({}) {
 
   useEffect(() => {
     obtenerUnUsuarioFirebase(id).then((usuarioSeleccionado) => {
+      console.log(usuarioSeleccionado);
       setCargando(false);
     }).catch((error) => {
+      console.log("Error", error);
         setError('Hubo un problema al cargar los productos.');
         setCargando(false);
     })

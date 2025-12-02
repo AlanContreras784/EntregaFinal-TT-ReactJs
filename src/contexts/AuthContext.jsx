@@ -69,100 +69,109 @@
 // }
 // export const useAuthContext = () => useContext(AuthContext);
 
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useCallback } from "react";
 import Swal from "sweetalert2";
 
-const AuthContext = createContext();
+// Contexto con valor inicial seguro
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-
   const [user, setUser] = useState(null);
   const [admin, setAdmin] = useState(false);
 
-  // -----------------------------------------
-  // 🔐 LOGIN REAL CON BACKEND
-  // -----------------------------------------
-  const login = async (email, password) => {
-    const res = await fetch("https://node-entrega-final-back-end.vercel.app/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
-  
-    if (!res.ok) throw new Error("Credenciales incorrectas");
-  
-    const data = await res.json();  // { token: "..." }
-  
-    // Guardar token y email
-    localStorage.setItem("authToken", data.token);
-    localStorage.setItem("userEmail", email);
-  
-    setUser(email);
-  
-    const administrator = import.meta.env.VITE_ADMIN;
-    setAdmin(email === administrator);
-  
-    return true;
-  };
-  
-  // -----------------------------------------
-  // 🔄 VERIFICAR LOGIN AL RECARGAR
-  // -----------------------------------------
-  function verificacionLog() {
+  // ------------------------------
+  // 🔐 LOGIN CON BACKEND
+  // ------------------------------
+  const login = useCallback(async (email, password) => {
+    try {
+      const res = await fetch("https://node-entrega-final-back-end.vercel.app/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!res.ok) {
+        Swal.fire("Error", "Credenciales incorrectas", "error");
+        return false;
+      }
+
+      const data = await res.json(); // { token }
+
+      // Guardar token y usuario
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("userEmail", email);
+
+      setUser(email);
+
+      const administrator = import.meta.env.VITE_ADMIN;
+      setAdmin(email === administrator);
+
+      return true;
+
+    } catch (error) {
+      Swal.fire("Error", "No se pudo conectar con el servidor", "error");
+      console.error("Error en login:", error);
+      return false;
+    }
+  }, []);
+
+
+  // ------------------------------
+  // 🔄 VERIFICAR LOGIN (persistencia)
+  // ------------------------------
+  const verificacionLog = useCallback(() => {
     const token = localStorage.getItem("authToken");
     const savedEmail = localStorage.getItem("userEmail");
     const administrator = import.meta.env.VITE_ADMIN;
-  
+
     if (!token || !savedEmail) return;
-  
+
     setUser(savedEmail);
     setAdmin(savedEmail === administrator);
-  }
+  }, []);
 
-  // -----------------------------------------
-  // 🚪 CERRAR SESIÓN
-  // -----------------------------------------
-  const logout = () => {
+
+  // ------------------------------
+  // 🚪 LOGOUT
+  // ------------------------------
+  const logout = useCallback(() => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: "¡Quieres cerrar sesión!",
+      text: "¿Quieres cerrar sesión?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, cerrar!",
+      confirmButtonText: "Sí, cerrar sesión",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-
-        Swal.fire({
-          title: "Ok!",
-          text: "Cerraste sesión.",
-          icon: "success"
-        });
+        Swal.fire("Sesión cerrada", "Has cerrado sesión correctamente", "success");
 
         localStorage.removeItem("authToken");
-        localStorage.removeItem("userEmail"); // ← también eliminamos esto
+        localStorage.removeItem("userEmail");
+
         setUser(null);
         setAdmin(false);
       }
     });
-  };
+  }, []);
+
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      login,
-      logout,
-      admin,
-      verificacionLog
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        admin,
+        login,
+        logout,
+        verificacionLog,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
 
-// ------------------------------
 // Hook personalizado
-// ------------------------------
 export const useAuthContext = () => useContext(AuthContext);

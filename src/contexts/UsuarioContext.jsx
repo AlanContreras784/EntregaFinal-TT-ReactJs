@@ -1,8 +1,12 @@
 import { createContext, useState, useContext } from 'react';
-import { editarUsuario, eliminarUsuario, obtenerUsuarioEnFirebase, obtenerUsuarios } from '../Auth/firebase.js';
+import {
+    editarUsuario,
+    eliminarUsuario,
+    obtenerUsuarioEnFirebase,
+    obtenerUsuarios
+} from '../Auth/firebase.js';
 
-
-// Crear el contexto del manejo de Productos------------------------------------ 
+// Crear el contexto del manejo de Usuarios
 const UsuariosContext = createContext();
 
 export function UsuariosProvider({ children }) {
@@ -10,65 +14,91 @@ export function UsuariosProvider({ children }) {
     const [usuarios, setUsuarios] = useState([]);
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
 
-    function obtenerUsuariosFirebase(){
-        return(
-            new Promise((res, rej) => {
-                obtenerUsuarios().then(usuarios => {
-                    setUsuarios(usuarios)
-                    res(usuarios)
-                }).catch(error => {
-                    rej(error)
-                })
-            })
-        )
+    // ------------------------------------------------------
+    // OBTENER TODOS LOS USUARIOS (Firebase)
+    // ------------------------------------------------------
+    async function obtenerUsuariosFirebase() {
+        try {
+            const lista = await obtenerUsuarios();
+            setUsuarios(lista);
+            return lista;
+        } catch (error) {
+            throw new Error(error?.message || "Error al obtener usuarios");
+        }
     }
 
+    // ------------------------------------------------------
+    // OBTENER UN USUARIO POR ID
+    // ------------------------------------------------------
+    async function obtenerUnUsuarioFirebase(id) {
+        try {
+            const usuario = await obtenerUsuarioEnFirebase(id);
+            setUsuarioSeleccionado(usuario);
+            return usuario;
+        } catch (error) {
+            console.error(error);
+            throw new Error("Hubo un error al obtener el usuario."+ error?.message);
 
-    function obtenerUnUsuarioFirebase(id){
-        return(
-            new Promise((res, rej) => {
-                obtenerUsuarioEnFirebase(id).then((usuario) => {
-                    setUsuarioSeleccionado(usuario)
-                    res(usuario)
-                }).catch((err) => {
-                    //console.log("Error:", err);
-                    rej("Hubo un error al obtener el usuario.");
-                }); 
-            })
-        )
+        }
     }
 
-    function editarUsuarioFirebase(usuario){
-        return(
-            new Promise((res, rej) => {
-                editarUsuario(usuario).then(usuario => {
-                    setUsuarioSeleccionado(usuario)
-                    //console.log(usuario)
-                    res(usuario)
-                }).catch(error => {
-                    rej (error)
-                })
-            })
-        )
+    // ------------------------------------------------------
+    // EDITAR USUARIO
+    // ------------------------------------------------------
+    async function editarUsuarioFirebase(usuario) {
+        try {
+            const usuarioActualizado = await editarUsuario(usuario);
+
+            // Actualiza estado global si corresponde
+            setUsuarioSeleccionado(usuarioActualizado);
+            setUsuarios(prev =>
+                prev.map(u => (u.id === usuarioActualizado.id ? usuarioActualizado : u))
+            );
+
+            return usuarioActualizado;
+
+        } catch (error) {
+            throw new Error(error?.message || "Error al editar el usuario");
+        }
     }
 
-    function eliminarUsuarioFirebase(id){
-        return(
-            new Promise((res, rej) => {
-                eliminarUsuario(id).then(() => {
-                    res()
-                }).catch(error => {
-                    rej(error)
-                })
-            })
-        )
+    // ------------------------------------------------------
+    // ELIMINAR USUARIO
+    // ------------------------------------------------------
+    async function eliminarUsuarioFirebase(id) {
+        try {
+            await eliminarUsuario(id);
+
+            // Actualizar lista
+            setUsuarios(prev => prev.filter(u => u.id !== id));
+
+            // Si era el seleccionado lo quitamos
+            if (usuarioSeleccionado?.id === id) {
+                setUsuarioSeleccionado(null);
+            }
+
+            return true;
+
+        } catch (error) {
+            throw new Error(error?.message || "Error al eliminar usuario");
+        }
     }
 
-
-
+    // ------------------------------------------------------
     return (
-        <UsuariosContext.Provider value={{ usuarioSeleccionado,obtenerUsuariosFirebase, obtenerUnUsuarioFirebase, editarUsuarioFirebase, eliminarUsuarioFirebase }}>
+        <UsuariosContext.Provider
+            value={{
+                usuarios,
+                usuarioSeleccionado,
+                obtenerUsuariosFirebase,
+                obtenerUnUsuarioFirebase,
+                editarUsuarioFirebase,
+                eliminarUsuarioFirebase
+            }}
+        >
             {children}
-        </UsuariosContext.Provider> );
+        </UsuariosContext.Provider>
+    );
 }
+
 export const useUsuariosContext = () => useContext(UsuariosContext);

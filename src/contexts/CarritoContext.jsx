@@ -1,79 +1,97 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 import { dispararSweetAlertBasico } from "../assets/SweetAlert";
 import Swal from "sweetalert2";
 
-// Crear el contexto
-export const CarritoContext = createContext();
-// Proveedor del contexto
+// Siempre pasar un valor inicial seguro
+export const CarritoContext = createContext(null);
+
 export function CarritoProvider({ children }) {
 
-    const [productosCarrito, setProductosCarrito] = useState([]);
+  const [productosCarrito, setProductosCarrito] = useState([]);
 
-    const agregarAlCarrito = (producto) => {
-        const existe = productosCarrito.find(p => p.id === producto.id);
-        if (existe) {
-            const carritoActualizado = productosCarrito.map((p) => {
-                if (p.id === producto.id){
-                    const productoActualizado = {...p, cantidad: p.cantidad + producto.cantidad}
-                    return productoActualizado
-                }else{
-                    return p
-                }
-            })
-            setProductosCarrito(carritoActualizado)
-        }else{
-            // Si no existe, lo agregamos con su cantidad
-            const nuevoCarrito = [...productosCarrito, producto];
-            setProductosCarrito(nuevoCarrito)
-        }
-    };
-    const vaciarCarrito = () => {
-        dispararSweetAlertBasico("Carrito Vacio", "El carrito fue vaciado con éxito ", "error", "Cerrar");
-        setProductosCarrito([]);
-    };
-    function borrarProductoCarrito(id){
+  // ----------- AGREGAR PRODUCTO -----------
+  const agregarAlCarrito = useCallback((producto) => {
+    setProductosCarrito((prevCarrito) => {
+      const existe = prevCarrito.find(p => p.id === producto.id);
 
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: "btn btn-success",
-                cancelButton: "btn btn-danger"
-            },
-            buttonsStyling: false
-            });
-            swalWithBootstrapButtons.fire({
-            title: "Estas seguro ?",
-            text: "Quieres Elimar este producto del Carrito!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Si, Eliminalo!",
-            cancelButtonText: "No, cancelar!",
-            reverseButtons: true
-            }).then((result) => {
-            if (result.isConfirmed) {
-                    swalWithBootstrapButtons.fire({
-                    title: "Eliminado!",
-                    text: "Su producto ha sido eliminado del Carrito.",
-                    icon: "success",
-                });
-                const nuevoCarrito = productosCarrito.filter((p) => p.id !== id);
-                setProductosCarrito(nuevoCarrito);
-            } else if (
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire({
-                title: "Cancelado",
-                text: "Tu producto no fue eliminado :)",
-                icon: "error"
-                });
-            }
-        });
-    }
+      if (existe) {
+        return prevCarrito.map(p =>
+          p.id === producto.id
+            ? { ...p, cantidad: p.cantidad + producto.cantidad }
+            : p
+        );
+      }
 
-    return (
-        <CarritoContext.Provider
-        value={{ productosCarrito, agregarAlCarrito, vaciarCarrito, borrarProductoCarrito }}
-        >
-        {children}
-        </CarritoContext.Provider>
+      return [...prevCarrito, producto];
+    });
+  }, []);
+
+
+  // ----------- VACIAR CARRITO -----------
+  const vaciarCarrito = useCallback(() => {
+    dispararSweetAlertBasico(
+      "Carrito Vacío",
+      "El carrito fue vaciado con éxito",
+      "error",
+      "Cerrar"
     );
+    setProductosCarrito([]);
+  }, []);
+
+
+  // ----------- BORRAR PRODUCTO -----------
+  const borrarProductoCarrito = useCallback((id) => {
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "¿Estás seguro?",
+        text: "¿Quieres eliminar este producto del carrito?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire({
+            title: "Eliminado",
+            text: "El producto fue eliminado del carrito.",
+            icon: "success",
+          });
+
+          setProductosCarrito((prev) => prev.filter((p) => p.id !== id));
+
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelado",
+            text: "El producto no fue eliminado :)",
+            icon: "error",
+          });
+        }
+      });
+
+  }, []);
+
+
+  return (
+    <CarritoContext.Provider
+      value={{
+        productosCarrito,
+        agregarAlCarrito,
+        vaciarCarrito,
+        borrarProductoCarrito,
+      }}
+    >
+      {children}
+    </CarritoContext.Provider>
+  );
 }

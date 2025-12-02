@@ -1,12 +1,27 @@
-// Import the functions you need from the SDKs you need
+// ===========================
+// Firebase Inicialización
+// ===========================
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-//import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { 
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup
+} from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import { 
+    addDoc, 
+    collection, 
+    deleteDoc, 
+    doc, 
+    getDoc, 
+    getDocs, 
+    getFirestore, 
+    setDoc 
+} from "firebase/firestore";
+
+// Configuración con variables de entorno Vite
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY,
     authDomain: import.meta.env.VITE_AUTH_DOMAIN,
@@ -17,222 +32,126 @@ const firebaseConfig = {
     measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
-const auth = getAuth();
-
-
-//////////////////////////////////////////////////////////////////////
-///////////////// AUTENTICACIÓN DE USUARIOS FIREBASE//////////////////////////
-//////////////////////////////////////////////////////////////////////
-
-//const provider = new GoogleAuthProvider();
-//const auth = getAuth();
-
-
-export function crearUsuario(email, password){
-    return(
-        new Promise((res,rej)=>{
-            createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-            // Signed up 
-                console.log("Credenciales", userCredential)
-                const user = userCredential.user;
-                console.log(user)
-                res(user);
-                // ...
-            })
-            .catch((error) => {
-                console.log(error.code, error.message)
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                rej(error, errorMessage,);
-                // ..
-            });
-        })
-    )
-    
-}
-
-export function loginEmailPass(email, password){
-
-    return(
-        new Promise((res,rej)=>{
-            signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                console.log('Credenciales', userCredential);
-                const user = userCredential.user;
-                console.log(user);
-                res(user);
-                // ...
-            })
-            .catch((error) => {
-                console.log(error.code, error.message)
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                rej(error);
-            });
-        }
-    )
-    )
-
-}
-
-
-auth.useDeviceLanguage()
-export function logearG(){
-    signInWithPopup(auth, provider)
-    .then((result) => {
-        console.log("test", result)
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-    }).catch((error) => {
-        console.log("test error", error )
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-    });
-}
-///////////////////////////////////////////////////////////
-///////////////////// BASE DE DATOS FIRESTORE  //////// ////////
-////////////////////////////////////////////////////////////////
-
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc } from "firebase/firestore";
-
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
-export function crearUsuarioEnFirebase(name, imagen,age,email,country) {
-    return new Promise(async (res, rej) => {
-        try {
+auth.useDeviceLanguage();
+
+
+// =====================================
+//    AUTENTICACIÓN (async/await)
+// =====================================
+
+export async function crearUsuario(email, password) {
+    try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        console.log("Credenciales:", cred);
+        return cred.user;
+    } catch (error) {
+        console.error(error.code, error.message);
+        throw error;
+    }
+}
+
+export async function loginEmailPass(email, password) {
+    try {
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        console.log("Login:", cred);
+        return cred.user;
+    } catch (error) {
+        console.error(error.code, error.message);
+        throw error;
+    }
+}
+
+export async function logearG() {
+    try {
+        const result = await signInWithPopup(auth, provider);
+        console.log("Login Google:", result);
+        return result.user;
+    } catch (error) {
+        console.error("Google Login Error:", error);
+        throw error;
+    }
+}
+
+
+// =====================================
+//  FIRESTORE: CRUD USUARIOS (async/await)
+// =====================================
+
+export async function crearUsuarioEnFirebase(name, imagen, age, email, country) {
+    try {
         const docRef = await addDoc(collection(db, "usuarios"), {
-                name: name,
-                imagen: imagen,
-                age: age,
-                email: email,
-                country: country
+            name,
+            imagen,
+            age,
+            email,
+            country
         });
+        console.log("Usuario creado con ID:", docRef.id);
+        return docRef;
+    } catch (error) {
+        console.error("Error al crear usuario:", error);
+        throw error;
+    }
+}
 
-        console.log("Document written with ID: ", docRef.id);
-        res(docRef)
+export async function obtenerUsuarios() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "usuarios"));
 
-        } catch (e) {
-        console.error("Error adding document: ", e);
-        rej(e)
+        return querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+    } catch (error) {
+        console.error("Error al obtener usuarios:", error);
+        throw error;
+    }
+}
+
+export async function obtenerUsuarioEnFirebase(id) {
+    try {
+        const docRef = doc(db, "usuarios", id);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+            throw new Error("El usuario no existe");
         }
-    });
+
+        return { id: docSnap.id, ...docSnap.data() };
+    } catch (error) {
+        console.error("Error al obtener usuario:", error);
+        throw error;
+    }
 }
 
-export function obtenerUsuarios() {
-    return(
-        new Promise(async (res, rej) => {
-                try {
-                    const querySnapshot = await getDocs(collection(db, "usuarios"));
-                    console.log(querySnapshot, "respuesta al getDocs")
-                    
-                    const resultados = querySnapshot.docs.map(doc => {
-                        console.log(doc, "documento sin ejecutar metodo .data()")
-                        const data = doc.data();
-                        console.log(data, "doc con data extraida")
-                        return {
-                            id: doc.id,
-                            name: data.name,
-                            imagen: data.imagen,
-                            age: data.age,
-                            email: data.email,
-                            country: data.country
-                        };
-                    });
+export async function editarUsuario(usuario) {
+    try {
+        if (!usuario?.id) {
+            throw new Error("ID de usuario inválido");
+        }
 
-                    res (resultados);
-                } catch (error) {
-                    console.error("Error al obtener los usuarios:", error);
-                    rej (error);
-                }
-        })
-    )
+        await setDoc(doc(db, "usuarios", usuario.id), usuario);
+        console.log("Usuario actualizado");
+        return true;
+    } catch (error) {
+        console.error("Error al editar usuario:", error);
+        throw error;
+    }
 }
 
-export function obtenerUsuarioEnFirebase(id) {
-    return(
-        new Promise(async (res, rej) => {
-                try {
-                    const docRef = doc(db, "usuarios", id);
-                    const docSnap = await getDoc(docRef);
-
-                    if (docSnap.exists()) {
-                        console.log("Document data:", docSnap.data());
-                        const data = docSnap.data();
-                        const usuario = {
-                            id: docSnap.id,
-                            name: data.name,
-                            imagen: data.imagen,
-                            age: data.age,
-                            email: data.email,
-                            country: data.country
-                        }
-                        console.log(usuario)
-                        res(usuario)
-                    } else {
-                    // docSnap.data() will be undefined in this case
-                    console.log("No such document!");
-                        rej("No such document!")
-                    }
-                } catch (error) {
-                    console.error("Error al obtener los usuarios:", error);
-                    rej (error);
-                }
-        })
-    )
-}
-
-export function editarUsuario(usuario){
-    return(
-        new Promise(async (res, rej) => {
-            try{
-                if (!usuario || typeof usuario.id !== "string" || usuario.id.trim() === "") {
-                    throw new Error("El ID del usuario es inválido o no está definido");
-                }
-                await setDoc(doc(db, "usuarios", usuario.id), {
-                    id:usuario.id,
-                    name: usuario.name,
-                    imagen: usuario.imagen,
-                    age: usuario.age,
-                    email: usuario.email,
-                    country: usuario.country
-                })
-                console.log("Document written ");
-                res()
-            }catch (e){
-                console.error("Error adding document: ", e);
-                rej(e)
-            }
-        })
-    )
-}
-
-export function eliminarUsuario(id){
-    return(
-        new Promise(async(res, rej) => {
-            try{
-                await deleteDoc(doc(db, "usuarios", id))
-                res()
-            }catch (e){
-                console.error("Error adding document: ", e);
-                rej(e)
-            }
-
-        })
-    )
+export async function eliminarUsuario(id) {
+    try {
+        await deleteDoc(doc(db, "usuarios", id));
+        console.log("Usuario eliminado");
+        return true;
+    } catch (error) {
+        console.error("Error al eliminar usuario:", error);
+        throw error;
+    }
 }

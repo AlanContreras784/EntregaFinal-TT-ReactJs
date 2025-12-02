@@ -8,7 +8,7 @@ import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } f
 
 
 function Reutilizables(){
-    const {productos, obtenerProductos,obtenerPorCategoria} = useProductosContext();
+    const {productos,obtenerPorCategoria} = useProductosContext();
     const [error, setError] = useState(null);
     const [cargando, setCargando]= useState(true);
     //Para Paginación----------------------------------------------
@@ -25,8 +25,10 @@ function Reutilizables(){
     
     {useEffect(() => {
         obtenerPorCategoria("reutilizables").then((productos) => {
+            console.log(productos);
             setCargando(false);
         }).catch((error) => {
+            console.log("Error", error);
             setError('Hubo un problema al cargar los productos.');
             setCargando(false);
         })

@@ -4,7 +4,7 @@ import CardUsuario from "./CardUsuario.jsx";
 import { useUsuariosContext } from "../contexts/UsuarioContext.jsx";
 import GifCargando from "../assets/img/Gif_Cargando.gif"
 
-function UsuariosContainerFirebase({}){
+function UsuariosContainerFirebase(){
     const [usuarios, setUsuarios] = useState([])
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
@@ -18,7 +18,7 @@ function UsuariosContainerFirebase({}){
                 setCargando(false);
             })
             .catch((error) => {
-                //console.log("Error", error)
+                console.log("Error", error)
                 setError('Hubo un problema al cargar los usuarios.');
                 setCargando(false);
             });

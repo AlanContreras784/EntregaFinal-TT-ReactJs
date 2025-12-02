@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "../styles/ProductoDetalle.css";
 import { dispararSweetAlertBasico, dispararSweetAlertTrueFalse } from "../assets/SweetAlert";
@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useUsuariosContext } from "../contexts/UsuarioContext";
 
-function UsuarioDetalleFirebase({}) {
+function UsuarioDetalleFirebase() {
   const {admin}= useAuthContext();
   const { id } = useParams();
   const {obtenerUnUsuarioFirebase,eliminarUsuarioFirebase, usuarioSeleccionado}=useUsuariosContext();

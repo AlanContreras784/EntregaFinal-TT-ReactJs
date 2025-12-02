@@ -8,7 +8,7 @@ import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } f
 
 
 function Biodegradables(){
-    const {productos, obtenerProductos,obtenerPorCategoria} = useProductosContext();
+    const {productos,obtenerPorCategoria} = useProductosContext();
     const [error, setError] = useState(null);
     const [cargando, setCargando]= useState(true);
     //Para Paginación----------------------------------------------
@@ -25,8 +25,10 @@ function Biodegradables(){
     
     {useEffect(() => {
         obtenerPorCategoria("biodegradables").then((productos) => {
+            console.log("Productos biodegradables cargados:", productos);
             setCargando(false);
         }).catch((error) => {
+            console.error("Error al cargar los productos biodegradables:", error);
             setError('Hubo un problema al cargar los productos.');
             setCargando(false);
         })

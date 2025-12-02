@@ -22,7 +22,7 @@ function Registrarse() {
     function registrarUsuario (e) {
         e.preventDefault();
         crearUsuario(email, password).then((user) => {
-            
+            console.log(user)
             crearUsuarioEnFirebase(name, imagen,age,email,country)
             login(email)
             toast.success('Registroeitoso')

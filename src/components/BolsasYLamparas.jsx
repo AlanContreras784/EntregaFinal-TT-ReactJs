@@ -8,7 +8,7 @@ import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } f
 
 
 function BolsasYLamparas(){
-    const {productos, obtenerProductos,obtenerPorCategoria} = useProductosContext();
+    const {productos,obtenerPorCategoria} = useProductosContext();
     const [error, setError] = useState(null);
     const [cargando, setCargando]= useState(true);
     //Para Paginación----------------------------------------------
@@ -25,12 +25,14 @@ function BolsasYLamparas(){
     
     {useEffect(() => {
         obtenerPorCategoria("bolsas y lamparas").then((productos) => {
+            console.log("Productos bolsas y lamparas cargados:", productos);
             setCargando(false);
         }).catch((error) => {
+            console.error("Error al cargar los productos bolsas y lamparas:", error);
             setError('Hubo un problema al cargar los productos.');
             setCargando(false);
         })
-    }, []);}
+    }, [])}
 
     if (cargando) {
         return (

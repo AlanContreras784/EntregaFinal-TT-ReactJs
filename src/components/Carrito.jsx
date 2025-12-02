@@ -1,7 +1,7 @@
 import "../styles/Carrito.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CarritoCard from "./CarritoCard.jsx";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { CarritoContext } from "../contexts/CarritoContext.jsx";
 import { useAuthContext } from "../contexts/AuthContext.jsx";
@@ -11,7 +11,6 @@ import {ToastContainer, toast} from "react-toastify";
 export default function Carrito() {
     const {user}=useAuthContext();
     const {productosCarrito, vaciarCarrito, borrarProductoCarrito}=useContext(CarritoContext);
-    const navegar=useNavigate();
 
     const total = productosCarrito.reduce(
         (subTotal, producto) => subTotal + producto.price * producto.cantidad, 0

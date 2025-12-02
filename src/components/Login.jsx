@@ -17,6 +17,7 @@ function Login() {
   function iniciarLoginEmailPass(e){
       e.preventDefault();
       loginEmailPass(usuario,password).then((user)=>{
+        console.log("Usuario logueado:", user);
         login(usuario,password);
         toast.success('Logueo exitoso');
         navigate('/');

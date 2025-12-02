@@ -1,7 +1,7 @@
 import Logo from "../assets/img/Logo Cero Huella Horiz.png"
 import "../styles/Header.css"
 import {Container, Navbar, Nav, Badge, NavDropdown, Offcanvas, Form, Button, InputGroup} from 'react-bootstrap';
-import { Link, useNavigate, useParams} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useContext, useEffect, useState } from 'react';
 import { CarritoContext } from '../contexts/CarritoContext';
 import { useAuthContext } from "../contexts/AuthContext";

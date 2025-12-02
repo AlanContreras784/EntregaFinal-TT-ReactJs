@@ -28,6 +28,7 @@ function FormularioEdicionUsuario() {
       setUsuario({ id, ...usuarioSeleccionado });
       setCargando(false);
     }).catch((error) => {
+      console.error("Error al cargar el usuario:", error);
         setError('Hubo un problema al cargar los usuarios.');
         setCargando(false);
     });
@@ -72,6 +73,7 @@ function FormularioEdicionUsuario() {
     const validarForm = validarFormulario()
       if (validarForm == true) {
       editarUsuarioFirebase(usuario).then((usuario) => {
+        console.log("Usuario editado con éxito:", usuario);
         dispararSweetAlertBasico("OK", 'usuario actualizado correctamente.', "success", "Cerrar");
         navigate("/admin/usuarios/"+id);
       }).catch((error) => {

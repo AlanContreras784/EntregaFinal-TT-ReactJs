@@ -25,8 +25,10 @@ function ProductosContainer(){
     
     {useEffect(() => {
         obtenerProductos().then((productos) => {
+            console.log("Productos cargados:", productos);
             setCargando(false);
         }).catch((error) => {
+            console.error("Error al cargar los productos:", error);
             setError('Hubo un problema al cargar los productos.');
             setCargando(false);
         })

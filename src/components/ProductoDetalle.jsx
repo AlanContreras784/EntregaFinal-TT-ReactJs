@@ -26,7 +26,8 @@ function ProductoDetalle() {
     const cargarProducto = async () => {
       try {
         await obtenerUnProducto(id);
-      } catch (err) {
+      } catch (error) {
+        console.error("Error al cargar el producto:", error);
         setError('Hubo un problema al cargar el producto.');
       } finally {
         setCargando(false);

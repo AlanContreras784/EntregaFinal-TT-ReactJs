@@ -36,10 +36,10 @@ function App() {
 
   return (
     <Router
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true
-      }}
+      // future={{
+      //   v7_startTransition: true,
+      //   v7_relativeSplatPath: true
+      // }}
     >
       <Header />
 

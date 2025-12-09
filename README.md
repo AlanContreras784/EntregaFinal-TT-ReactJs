@@ -1,9 +1,8 @@
-
 # 🌿 Cero Huella – E-commerce Sostenible
 
 Aplicación web desarrollada en **React + Firebase** que permite a usuarios comprar productos sostenibles, explorar categorías ecológicas y registrarse para recibir atención personalizada. Incluye panel de administración, autenticación, carrito de compras y más.
 
-🌐 [Ver aplicación en producción](https://entrega-final-tt-react-js.vercel.app/)
+🌐 **Demo:** (si está desplegada) revisá la URL configurada en `vercel.json` o tu despliegue en Vercel.
 
 ---
 
@@ -29,7 +28,15 @@ Aplicación web desarrollada en **React + Firebase** que permite a usuarios comp
 
 ---
 
-## 📂 Estructura de Componentes
+## 🧩 Resumen & Organización
+
+- SPA (single page application) con catálogo, detalle, carrito y autenticación.
+- Estado global manejado con Context API (`src/contexts/`): `AuthContext.jsx`, `CarritoContext.jsx`, `ProductosContext.jsx`, `UsuarioContext.jsx`.
+- Componentes principales en `src/components/` y estilos en `src/styles/`.
+
+---
+
+## 📂 Estructura de Componentes (resumen)
 
 ### Cliente
 - `ProductosContainer.jsx`: catálogo de productos paginado.
@@ -47,32 +54,47 @@ Aplicación web desarrollada en **React + Firebase** que permite a usuarios comp
 
 ---
 
-## 🖥️ Instalación y Ejecución Local
+## 🖥️ Instalación y Ejecución Local (PowerShell)
 
-```bash
+```powershell
 git clone https://github.com/AlanContreras784/PROYECTO-TT-REACT-JS.git
-cd PROYECTO-TT-REACT-JS
+cd "c:\CERO-HUELLA-Talent Tech\EntregaFinal-TT-ReactJs"
 npm install
 ```
 
-### Variables de entorno
+### Ejecutar en desarrollo
 
-Creá un archivo `.env` y completá con tus claves de Firebase:
-
-```env
-VITE_API_KEY=...
-VITE_AUTH_DOMAIN=...
-VITE_PROJECT_ID=...
-VITE_STORAGE_BUCKET=...
-VITE_MESSAGING_SENDER_ID=...
-VITE_APP_ID=...
-```
-
-### Ejecutar app localmente
-
-```bash
+```powershell
 npm run dev
 ```
+
+Abre la URL que muestre Vite (por defecto `http://localhost:5173`).
+
+### Build de producción y preview
+
+```powershell
+npm run build
+npm run preview
+```
+
+---
+
+## 🔐 Variables de entorno / Firebase
+
+El proyecto incluye `src/Auth/firebase.js` con la inicialización de Firebase. Reemplazala con tus credenciales o usa variables de entorno con Vite.
+
+Ejemplo de `.env` para Vite (archivo en la raíz):
+
+```env
+VITE_FIREBASE_API_KEY=tu_api_key
+VITE_FIREBASE_AUTH_DOMAIN=tu_auth_domain
+VITE_FIREBASE_PROJECT_ID=tu_project_id
+VITE_FIREBASE_STORAGE_BUCKET=tu_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=tu_sender_id
+VITE_FIREBASE_APP_ID=tu_app_id
+```
+
+En `src/Auth/firebase.js` podés usar `import.meta.env.VITE_FIREBASE_API_KEY` para leerlas.
 
 ---
 
@@ -90,18 +112,36 @@ npm run dev
 
 ---
 
+## ✅ Buenas prácticas y notas
+
+- Actualiza `src/Auth/firebase.js` con tus claves o usa variables de entorno.
+- Si agregás assets estáticos, colocalos en `public/` o `src/assets/img/`.
+- Mantén los contexts con responsabilidades claras (productos, usuario, carrito).
+
+---
+
+## 🚀 Despliegue
+
+- Configurado para Vercel (archivo `vercel.json`). Conectá tu repo en Vercel y añadí las variables de entorno en el panel de Vercel.
+
+---
+
+## 🤝 Contribuciones
+
+1. Forkear el repositorio
+2. Crear una rama con tu feature/bugfix
+3. Abrir un Pull Request describiendo los cambios
+
+---
+
 ## 👤 Autor
 
-Desarrollado por [Alan Contreras Flores](https://github.com/AlanContreras784)
+Desarrollado por [Alan Contreras Flores](https://github.com/AlanContreras784) — `AlanContreras784`
 
 ---
 
 ## 📃 Licencia
 
-MIT License
+MIT
 
 ---
-
-## 🙋‍♂️ ¿Querés contribuir?
-
-¡Bienvenido! Podés abrir un `Issue` o hacer un `Pull Request`. Las sugerencias, mejoras de UI o nuevas funcionalidades son bienvenidas.
